@@ -1,0 +1,35 @@
+[auth]
+  store-passwords = yes
+  store-auth-creds = yes
+
+[helpers]
+  editor-cmd = vim
+# diff-cmd = diff_program (diff, gdiff, etc.)
+# diff3-cmd = diff3_program (diff3, gdiff3, etc.)
+# diff3-has-program-arg = [true | false]
+
+[tunnels]
+# ssh = $SVN_SSH ssh
+# rsh = rsh
+# rsh = /path/to/rsh -l myusername
+
+[miscellany]
+  global-ignores = *.o *.lo *.la #*# .*.rej *.rej .*~ *~ .#* .DS_Store
+  log-encoding = latin1
+  use-commit-times = yes
+# no-unlock = yes
+  enable-auto-props = yes
+
+[auto-props]
+###   file-name-pattern = propname[=value][;propname[=value]...]
+  *.c = svn:eol-style=native
+  *.m = svn:eol-style=native
+  *.cpp = svn:eol-style=native
+  *.h = svn:eol-style=native
+  *.hs = svn:eol-style=native
+  *.lhs = svn:eol-style=native
+  *.sh = svn:eol-style=native;svn:executable
+  *.txt = svn:eol-style=native
+  *.png = svn:mime-type=image/png
+  *.jpg = svn:mime-type=image/jpeg
+  Makefile = svn:eol-style=native
