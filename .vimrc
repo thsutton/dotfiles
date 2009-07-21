@@ -23,6 +23,7 @@ set incsearch
 set autowrite
 set hidden
 set background=dark
+highlight LineNr ctermfg=949494 ctermbg=black
 
 set autoindent
 
