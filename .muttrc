@@ -1,0 +1,23 @@
+set mbox_type=Maildir
+set folder="~/Mail"
+set mbox="~/Mail"
+set record="+.Sent"
+set postponed="+.Drafts"
+set spoolfile="~/Mail"
+
+set imap_user="thsutton@gmail.com"
+set smtp_url="smtp://thsutton@smtp.gmail.com:587/"
+set from="thsutton@gmail.com"
+set realname="Thomas Sutton"
+
+set folder="imaps://imap.gmail.com:993"
+#set spoolfile="+INBOX"
+set postponed="+[Google Mail]/Drafts"
+
+set header_cache=~/.mutt/cache/headers
+set message_cachedir=~/.mutt/cache/bodies
+
+set move=no
+
+unmailboxes *
+mailboxes Mail
