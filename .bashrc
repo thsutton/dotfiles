@@ -1,3 +1,5 @@
+
+
 # Include my environment
 for file in $HOME/.bash/env/*.sh; do
     source $file
@@ -12,6 +14,9 @@ done
 if [ -d "$HOME/bin" ]; then
     export PATH="$HOME/bin:$PATH"
 fi
+
+# Set the prompt
+export PS1="\u@\h:\W\$ "
 
 # Use colourful listings
 eval "`dircolors -b`"
