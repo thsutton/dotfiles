@@ -1,4 +1,5 @@
 .subversion/auth
+.ssh/id_*
 .*.swp
 .viminfo
 *~
