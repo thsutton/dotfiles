@@ -4,6 +4,7 @@ set mbox="~/Mail"
 set record="+.Sent"
 set postponed="+.Drafts"
 set spoolfile="~/Mail"
+set maildir_trash="yes"
 
 set imap_user="thsutton@gmail.com"
 set smtp_url="smtp://thsutton@smtp.gmail.com:587/"
