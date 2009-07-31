@@ -2,4 +2,4 @@ startup_message off
 shell -bash
 # Use UTF-8
 encoding UTF-8
-utf8 on on
+#utf8 on on
