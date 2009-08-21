@@ -36,3 +36,9 @@ syntax on
 " Jump to last position in files
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
             \| exe "normal g'\"" | endif
+
+" Haskell mode
+au BufEnter *.hs compiler ghc
+au BufEnter *.lhs compiler ghc
+let g:haddock_browser = "open"
+let g:haddock_browser_callformat = "%s %s"
