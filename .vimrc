@@ -33,8 +33,6 @@ filetype plugin on
 filetype indent on
 syntax on
 
-let g:haddock_browser="open"
-
 " Jump to last position in files
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
             \| exe "normal g'\"" | endif
