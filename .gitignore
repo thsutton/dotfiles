@@ -4,4 +4,4 @@
 .viminfo
 *~
 *.bak
-*.sh
+./*.sh
