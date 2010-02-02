@@ -1,17 +1,11 @@
 for dir in /opt/*/bin; do
-    if [ -d "$dir" -a "$dir" != "/opt/local/bin" ]; then
-        export PATH="$dir:$PATH"
+    if [ "$dir" != "/opt/local/bin" ]; then
+        pathmunge "$dir"
     fi
 done
 
-if [ -d "/opt/local/bin" ]; then
-    export PATH="/opt/local/bin:$PATH"
-fi
+pathmunge "/opt/local/bin"
+pathmunge "/usr/local/bin"
+pathmunge "$HOME/bin"
 
-if [ -d "/usr/local/bin" ]; then
-    export PATH="/usr/local/bin:$PATH"
-fi
-
-if [ -d "$HOME/bin" ]; then
-    export PATH="$HOME/bin:$PATH"
-fi
+export PATH
