@@ -6,6 +6,7 @@ done
 
 pathmunge "/opt/local/bin"
 pathmunge "/usr/local/bin"
+pathmunge "$HOME/.gem/ruby/1.8/bin"
 pathmunge "$HOME/bin"
 
 export PATH
