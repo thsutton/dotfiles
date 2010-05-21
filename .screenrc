@@ -3,4 +3,4 @@ shell bash
 # Use UTF-8
 encoding UTF-8
 #utf8 on on
-defhstatus "(n) t"
+defhstatus "H (n) t"
