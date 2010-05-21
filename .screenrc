@@ -1,6 +1,35 @@
+##
+## Terminal handling
+##
+termcapinfo vt100 dl=5\E[M
+termcapinfo xterm*|rxvt*|kterm*|Eterm* hs:ts=\E]0;:fs=\007:ds=\E]0;\007
+termcapinfo xterm*|linux*|rxvt*|Eterm* OP
+termcapinfo xterm 'is=\E[r\E[m\E[2J\E[H\E[?7h\E[?1;4;6l'
+
+##
+## UI stuff
+##
+defnonblock 5
+
 startup_message off
-shell bash
-# Use UTF-8
-encoding UTF-8
-#utf8 on on
+
+hardstatus off
 defhstatus "H (n) t"
+
+vbell on
+vbell_msg " Bow wow -- Bow wow!! "
+
+defscrollback 1024
+
+encoding UTF-8
+
+##
+## Commands
+##
+bind ^k
+bind ^\
+bind \\ quit
+bind K kill
+bind } history
+
+shell bash
