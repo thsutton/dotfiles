@@ -1,3 +1,8 @@
 [user]
 	name = Thomas Sutton
 	email = me@thomas-sutton.id.au
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
