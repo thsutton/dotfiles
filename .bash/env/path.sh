@@ -4,6 +4,7 @@ for dir in /opt/*/bin; do
     fi
 done
 
+pathmunge "/Applications/MAMP/Library/bin"
 pathmunge "/opt/local/bin"
 pathmunge "/usr/local/bin"
 pathmunge "$HOME/.gem/ruby/1.8/bin"
