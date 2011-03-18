@@ -10,7 +10,7 @@
 pathdelete () {
     path="$1"
     component="$2"
-    path=`echo "$path" | sed -Ee "s#(^|:)$component($|:)##g"`
+    path=$(echo "$path" | sed -Ee "s#(^|:)$component($|:)#\2#g")
     echo $path
 }
 
