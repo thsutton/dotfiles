@@ -43,4 +43,5 @@
 ;; DVC
 ;;
 
-(load-library "dvc-load.el")
+(require 'dvc-autoloads)
+
