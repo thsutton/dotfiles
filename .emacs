@@ -7,6 +7,10 @@
   (normal-top-level-add-subdirs-to-load-path))
 
 
+;; Key bindings
+(global-set-key (kbd "C-x a r") 'align-regexp)
+
+
 ;;
 ;; Markdown
 ;;
