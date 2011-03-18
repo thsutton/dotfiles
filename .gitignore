@@ -4,5 +4,6 @@
 .viminfo
 *~
 *.bak
+*.elc
 ./*.sh
 _darcs/
