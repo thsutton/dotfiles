@@ -1,10 +1,12 @@
 
 ;;
-;; Add my local library dirs
+;; Add local lisp and info directories
 ;;
 (let ((default-directory "~/.emacs.d/site-lisp/"))
   (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path))
+
+(add-to-list 'Info-default-directory-list "~/.emacs.d/info/")
 
 
 ;; Key bindings
@@ -36,3 +38,9 @@
 ; Enable intelligent indentation
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
+
+;;
+;; DVC
+;;
+
+(load-library "dvc-load.el")
