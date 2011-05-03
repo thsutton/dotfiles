@@ -45,3 +45,22 @@
 
 (require 'dvc-autoloads)
 
+
+(put 'upcase-region 'disabled nil)
+
+
+;;
+;; PHP Mode
+;;
+(autoload 'php-mode "php-mode-improved.el"
+  "Major mode for editing PHP files" t)
+(setq auto-mode-alist
+      (cons '("\\.php" . php-mode) auto-mode-alist))
+
+;;
+;; CSV Mode
+;;
+(autoload 'csv-mode "csv-mode.el"
+  "Major mode for editing CSV files" t)
+(setq auto-mode-alist
+      (cons '("\\.csv" . csv-mode) auto-mode-alist))
