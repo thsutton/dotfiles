@@ -4,9 +4,9 @@ for dir in /opt/*/bin; do
     fi
 done
 
-pathmunge "/Applications/MAMP/Library/bin"
 pathmunge "/opt/local/bin"
 pathmunge "/usr/local/bin" "move"
+pathmunge "/Applications/MAMP/Library/bin" "move"
 pathmunge "$HOME/bin"
 
 export PATH
