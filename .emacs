@@ -3,6 +3,7 @@
 ;;
 ;; Add local lisp and info directories
 ;;
+
 (let ((default-directory "~/.emacs.d/site-lisp/"))
   (normal-top-level-add-to-load-path '("."))
   (normal-top-level-add-subdirs-to-load-path))
@@ -19,10 +20,12 @@
 
 (transient-mark-mode 1)
 
+(put 'upcase-region 'disabled nil)
 
 ;;
 ;; Markdown
 ;;
+
 (autoload 'markdown-mode "markdown-mode.el"
   "Major mode for editing Markdown files" t)
 (setq auto-mode-alist
@@ -33,8 +36,28 @@
 
 
 ;;
+;; Ruby
+;;
+(autoload 'ruby-mode "ruby-mode"
+  "Major mode for ruby files" t)
+(add-to-list 'auto-mode-alist
+	     '("\\.rb$" . ruby-mode))
+(add-to-list 'interpreter-mode-alist
+	     '("ruby" . ruby-mode))
+
+(autoload 'run-ruby "inf-ruby"
+  "Run an inferior Ruby process.")
+(autoload 'inf-ruby-keys "inf-ruby"
+  "Set local key defs for inf-ruby in ruby-mode")
+(add-hook 'ruby-mode-hook
+          '(lambda ()
+	     (inf-ruby-keys)
+	     ))
+
+;;
 ;; Haskell
 ;;
+
 (autoload 'haskell-mode "haskell-site-file.el"
   "Major mode for editing Haskell files" t)
 (setq auto-mode-alist
@@ -53,24 +76,25 @@
 (require 'dvc-autoloads)
 
 
-(put 'upcase-region 'disabled nil)
-
-
 ;;
 ;; PHP Mode
 ;;
+
 (autoload 'php-mode "php-mode-improved.el"
   "Major mode for editing PHP files" t)
 (setq auto-mode-alist
       (cons '("\\.php" . php-mode) auto-mode-alist))
 
+
 ;;
 ;; CSV Mode
 ;;
+
 (autoload 'csv-mode "csv-mode.el"
   "Major mode for editing CSV files" t)
 (add-to-list 'auto-mode-alist
     '("\\.csv" . csv-mode))
+
 
 ;;
 ;; Puppet
@@ -81,6 +105,7 @@
 
 (add-to-list 'auto-mode-alist 
     '("\\.pp$" . puppet-mode))
+
 
 ;;
 ;; Org mode
