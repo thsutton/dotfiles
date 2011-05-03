@@ -1,4 +1,5 @@
 
+
 ;;
 ;; Add local lisp and info directories
 ;;
@@ -11,6 +12,12 @@
 
 ;; Key bindings
 (global-set-key (kbd "C-x a r") 'align-regexp)
+
+(set-terminal-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(prefer-coding-system 'utf-8)
+
+(transient-mark-mode 1)
 
 
 ;;
@@ -62,5 +69,33 @@
 ;;
 (autoload 'csv-mode "csv-mode.el"
   "Major mode for editing CSV files" t)
-(setq auto-mode-alist
-      (cons '("\\.csv" . csv-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist
+    '("\\.csv" . csv-mode))
+
+;;
+;; Puppet
+;;
+
+(autoload 'puppet-mode "puppet-mode"
+  "Major mode for editing puppet manifests")
+
+(add-to-list 'auto-mode-alist 
+    '("\\.pp$" . puppet-mode))
+
+;;
+;; Org mode
+;;
+(require 'org-install)
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
+;; Set to the location of your Org files on your local system
+(setq org-directory "~/org")
+;; Set to the name of the file where new notes will be stored
+(setq org-mobile-inbox-for-pull "~/org/flagged.org")
+;; Set to <your Dropbox root directory>/MobileOrg.
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
+(setq org-agenda-files (list "~/org/index.org"
+                             "~/org/work.org" 
+                             "~/org/home.org"))
