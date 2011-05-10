@@ -82,8 +82,8 @@
 
 (autoload 'php-mode "php-mode-improved.el"
   "Major mode for editing PHP files" t)
-(setq auto-mode-alist
-      (cons '("\\.php" . php-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist
+	     '("\\.php" . php-mode))
 
 
 ;;
@@ -102,7 +102,6 @@
 
 (autoload 'puppet-mode "puppet-mode"
   "Major mode for editing puppet manifests")
-
 (add-to-list 'auto-mode-alist 
     '("\\.pp$" . puppet-mode))
 
