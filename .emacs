@@ -87,6 +87,15 @@
 
 
 ;;
+;; Javascript Mode
+;;
+
+(autoload 'js2-mode "js2"
+  "Major mode for editing Javascript" t)
+(add-to-list 'auto-mode-alist
+	     '("\\.js$" . js2-mode))
+
+;;
 ;; CSV Mode
 ;;
 
