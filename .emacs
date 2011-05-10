@@ -60,8 +60,8 @@
 
 (autoload 'haskell-mode "haskell-site-file.el"
   "Major mode for editing Haskell files" t)
-(setq auto-mode-alist
-      (cons '("\\.hs" . haskell-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist
+	     '("\\.hs" . haskell-mode))
 
 ; Enable automatic documentation display
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
