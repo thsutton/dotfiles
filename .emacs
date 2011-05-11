@@ -62,6 +62,8 @@
   "Major mode for editing Haskell files" t)
 (add-to-list 'auto-mode-alist
 	     '("\\.hs" . haskell-mode))
+(add-to-list 'auto-mode-alist
+	     '("\\.lhs" . haskell-mode))
 
 ; Enable automatic documentation display
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
