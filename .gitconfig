@@ -8,3 +8,5 @@
 	status = auto
 [push]
 	default = matching
+[core]
+	quotepath = false

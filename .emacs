@@ -26,14 +26,39 @@
 ;; Markdown
 ;;
 
-(autoload 'markdown-mode "markdown-mode.el"
+(autoload 'markdown-mode "markdown-mode"
   "Major mode for editing Markdown files" t)
-(setq auto-mode-alist
-      (cons '("\\.txt" . markdown-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist
+	     '("\\.txt\\'" . markdown-mode))
 
 ; Enable auto-fill mode when editing Markdown.
 (add-hook 'markdown-mode-hook 'auto-fill-mode)
 
+
+;;
+;; Javascript
+;;
+
+(add-to-list 'auto-mode-alist
+	     '("\\.js\\'" . espresso-mode))
+(autoload 'espresso-mode "espresso" 
+  "Major mode for editing Javascript files" t)
+(setq espresso-mode-hook
+      (function (lambda ()
+		  (setq indent-tabs-mode nil)
+		  (setq espresso-indent-level 2)
+		  )
+		))
+
+
+;;
+;; CSS
+;;
+
+(add-to-list 'auto-mode-alist
+	     '("\\.css\\'" . css-mode))
+(autoload 'css-mode "css-mode"
+  "Major mode for editing CSS files" t)
 
 ;;
 ;; Ruby
