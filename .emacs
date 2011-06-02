@@ -29,7 +29,7 @@
 (autoload 'markdown-mode "markdown-mode"
   "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist
-	     '("\\.txt\\'" . markdown-mode))
+	     '("\\.txt" . markdown-mode))
 
 ; Enable auto-fill mode when editing Markdown.
 (add-hook 'markdown-mode-hook 'auto-fill-mode)
@@ -85,8 +85,10 @@
 
 (autoload 'haskell-mode "haskell-site-file.el"
   "Major mode for editing Haskell files" t)
-(setq auto-mode-alist
-      (cons '("\\.hs" . haskell-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist
+	     '("\\.hs" . haskell-mode))
+(add-to-list 'auto-mode-alist
+	     '("\\.lhs" . haskell-mode))
 
 ; Enable automatic documentation display
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
@@ -107,9 +109,18 @@
 
 (autoload 'php-mode "php-mode-improved.el"
   "Major mode for editing PHP files" t)
-(setq auto-mode-alist
-      (cons '("\\.php" . php-mode) auto-mode-alist))
+(add-to-list 'auto-mode-alist
+	     '("\\.php" . php-mode))
 
+
+;;
+;; Javascript Mode
+;;
+
+(autoload 'js2-mode "js2"
+  "Major mode for editing Javascript" t)
+(add-to-list 'auto-mode-alist
+	     '("\\.js$" . js2-mode))
 
 ;;
 ;; CSV Mode
@@ -127,7 +138,6 @@
 
 (autoload 'puppet-mode "puppet-mode"
   "Major mode for editing puppet manifests")
-
 (add-to-list 'auto-mode-alist 
     '("\\.pp$" . puppet-mode))
 
@@ -135,17 +145,17 @@
 ;;
 ;; Org mode
 ;;
-(require 'org-install)
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(setq org-log-done t)
-;; Set to the location of your Org files on your local system
-(setq org-directory "~/org")
-;; Set to the name of the file where new notes will be stored
-(setq org-mobile-inbox-for-pull "~/org/flagged.org")
-;; Set to <your Dropbox root directory>/MobileOrg.
-(setq org-mobile-directory "~/Dropbox/MobileOrg")
-(setq org-agenda-files (list "~/org/index.org"
-                             "~/org/work.org" 
-                             "~/org/home.org"))
+;; (require 'org-install)
+;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+;; (define-key global-map "\C-cl" 'org-store-link)
+;; (define-key global-map "\C-ca" 'org-agenda)
+;; (setq org-log-done t)
+;; ;; Set to the location of your Org files on your local system
+;; (setq org-directory "~/org")
+;; ;; Set to the name of the file where new notes will be stored
+;; (setq org-mobile-inbox-for-pull "~/org/flagged.org")
+;; ;; Set to <your Dropbox root directory>/MobileOrg.
+;; (setq org-mobile-directory "~/Dropbox/MobileOrg")
+;; (setq org-agenda-files (list "~/org/index.org"
+;;                              "~/org/work.org"
+;;                              "~/org/home.org"))
