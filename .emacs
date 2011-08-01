@@ -111,6 +111,12 @@
   "Major mode for editing PHP files" t)
 (add-to-list 'auto-mode-alist
 	     '("\\.php" . php-mode))
+(setq php-mode-hook
+      (function (lambda ()
+		  (setq indent-tabs-mode nil)
+		  (setq php-mode-warn-if-mumamo-off t)
+		  )
+		))
 
 
 ;;
