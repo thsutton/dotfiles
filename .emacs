@@ -149,6 +149,15 @@
 
 
 ;;
+;; Nginx
+;;
+
+(autoload 'nginx-mode "nginx-mode.el"
+  "Major mode for editing nginx configuration files")
+(add-to-list 'auto-mode-alist
+  '("nginx/" . nginx-mode))
+
+;;
 ;; Org mode
 ;;
 ;; (require 'org-install)
