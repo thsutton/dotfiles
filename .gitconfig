@@ -8,3 +8,6 @@
 	status = auto
 [push]
 	default = matching
+[core]
+	quotepath = false
+	excludesfile = /Users/thsutton/.gitignore

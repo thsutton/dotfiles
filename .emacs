@@ -60,16 +60,23 @@
 
 (autoload 'haskell-mode "haskell-site-file.el"
   "Major mode for editing Haskell files" t)
+(autoload 'haskell-cabal-mode "haskell-site-file.el"
+  "Major mode for editing Cabal files" t)
 (add-to-list 'auto-mode-alist
 	     '("\\.hs" . haskell-mode))
 (add-to-list 'auto-mode-alist
 	     '("\\.lhs" . haskell-mode))
+(add-to-list 'auto-mode-alist
+	     '("\\.cabal" . haskell-cabal-mode))
+
 
 ; Enable automatic documentation display
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 ; Enable intelligent indentation
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-
+(add-hook 'haskell-cabal-mode-hook
+	  (lambda () (setq indent-tabs-mode nil))
+	  )
 
 ;;
 ;; DVC
