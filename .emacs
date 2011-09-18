@@ -26,7 +26,7 @@
 ;; Markdown
 ;;
 
-(autoload 'markdown-mode "markdown-mode.el"
+(autoload 'markdown-mode "markdown-mode"
   "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist
 	     '("\\.txt" . markdown-mode))
@@ -34,6 +34,31 @@
 ; Enable auto-fill mode when editing Markdown.
 (add-hook 'markdown-mode-hook 'auto-fill-mode)
 
+
+;;
+;; Javascript
+;;
+
+(add-to-list 'auto-mode-alist
+	     '("\\.js\\'" . espresso-mode))
+(autoload 'espresso-mode "espresso" 
+  "Major mode for editing Javascript files" t)
+(setq espresso-mode-hook
+      (function (lambda ()
+		  (setq indent-tabs-mode nil)
+		  (setq espresso-indent-level 2)
+		  )
+		))
+
+
+;;
+;; CSS
+;;
+
+(add-to-list 'auto-mode-alist
+	     '("\\.css\\'" . css-mode))
+(autoload 'css-mode "css-mode"
+  "Major mode for editing CSS files" t)
 
 ;;
 ;; Ruby
@@ -93,6 +118,12 @@
   "Major mode for editing PHP files" t)
 (add-to-list 'auto-mode-alist
 	     '("\\.php" . php-mode))
+(setq php-mode-hook
+      (function (lambda ()
+		  (setq indent-tabs-mode nil)
+		  (setq php-mode-warn-if-mumamo-off t)
+		  )
+		))
 
 
 ;;
@@ -123,6 +154,15 @@
 (add-to-list 'auto-mode-alist 
     '("\\.pp$" . puppet-mode))
 
+
+;;
+;; Nginx
+;;
+
+(autoload 'nginx-mode "nginx-mode.el"
+  "Major mode for editing nginx configuration files")
+(add-to-list 'auto-mode-alist
+  '("nginx/" . nginx-mode))
 
 ;;
 ;; Org mode
