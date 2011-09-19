@@ -10,4 +10,4 @@
 	default = matching
 [core]
 	quotepath = false
-	excludesfile = /Users/thsutton/.gitignore
+	excludesfile = ~/.gitignore
