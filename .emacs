@@ -30,6 +30,9 @@
   "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist
 	     '("\\.txt" . markdown-mode))
+(add-to-list 'auto-mode-alist
+	     '("\\.md" . markdown-mode))
+
 
 ; Enable auto-fill mode when editing Markdown.
 (add-hook 'markdown-mode-hook 'auto-fill-mode)
@@ -63,6 +66,7 @@
 ;;
 ;; Ruby
 ;;
+
 (autoload 'ruby-mode "ruby-mode"
   "Major mode for ruby files" t)
 (add-to-list 'auto-mode-alist
@@ -164,20 +168,37 @@
 (add-to-list 'auto-mode-alist
   '("nginx/" . nginx-mode))
 
+
 ;;
-;; Org mode
+;; Octave
 ;;
-;; (require 'org-install)
-;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-;; (define-key global-map "\C-cl" 'org-store-link)
-;; (define-key global-map "\C-ca" 'org-agenda)
-;; (setq org-log-done t)
-;; ;; Set to the location of your Org files on your local system
-;; (setq org-directory "~/org")
-;; ;; Set to the name of the file where new notes will be stored
-;; (setq org-mobile-inbox-for-pull "~/org/flagged.org")
-;; ;; Set to <your Dropbox root directory>/MobileOrg.
-;; (setq org-mobile-directory "~/Dropbox/MobileOrg")
-;; (setq org-agenda-files (list "~/org/index.org"
-;;                              "~/org/work.org"
-;;                              "~/org/home.org"))
+(autoload 'octave-mode "octave-mod.el" nil t)
+(add-to-list 'auto-mode-alist
+	     '("\\.m$" . octave-mode))
+(add-hook 'octave-mode-hook
+	  (lambda ()
+	    (abbrev-mode 1)
+	    (auto-fill-mode 1)
+	    (font-lock-mode 1)
+	    ))
+(add-hook 'inferior-octave-mode-hook
+	  (lambda ()
+	    (turn-on-font-lock)
+	    (define-key inferior-octave-mode-map [up]
+	      'comint-previous-input)
+	    (define-key inferior-octave-mode-map [down]
+	      'comint-next-input)))
+
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(require-final-newline t))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "White" :foreground "Black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "apple" :family "Monaco")))))
