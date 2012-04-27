@@ -1,11 +1,6 @@
 .DS_Store
 ._*
-.subversion/auth
-.ssh/id_*
 .*.swp
-.viminfo
 *~
 *.bak
 *.elc
-./*.sh
-_darcs/
