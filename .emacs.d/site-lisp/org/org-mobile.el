@@ -1,10 +1,9 @@
 ;;; org-mobile.el --- Code for asymmetric sync with a mobile device
-;; Copyright (C) 2009, 2010 Free Software Foundation, Inc.
+;; Copyright (C) 2009-2012 Free Software Foundation, Inc.
 ;;
 ;; Author: Carsten Dominik <carsten at orgmode dot org>
 ;; Keywords: outlines, hypermedia, calendar, wp
 ;; Homepage: http://orgmode.org
-;; Version: 7.5
 ;;
 ;; This file is part of GNU Emacs.
 ;;
@@ -38,6 +37,9 @@
 
 (eval-when-compile (require 'cl))
 
+(declare-function org-pop-to-buffer-same-window
+		  "org-compat" (&optional buffer-or-name norecord label))
+
 (defgroup org-mobile nil
   "Options concerning support for a viewer/editor on a mobile device."
   :tag "Org Mobile"
@@ -66,6 +68,7 @@ org-agenda-text-search-extra-files
 (defcustom org-mobile-files-exclude-regexp ""
   "A regexp to exclude files from `org-mobile-files'."
   :group 'org-mobile
+  :version "24.1"
   :type 'regexp)
 
 (defcustom org-mobile-directory ""
@@ -82,6 +85,7 @@ Turning on encryption requires to set the same password in the MobileOrg
 application.  Before turning this on, check of MobileOrg does already
 support it - at the time of this writing it did not yet."
   :group 'org-mobile
+  :version "24.1"
   :type 'boolean)
 
 (defcustom org-mobile-encryption-tempfile "~/orgtmpcrypt"
@@ -89,6 +93,7 @@ support it - at the time of this writing it did not yet."
 This must be local file on your local machine (not on the WebDAV server).
 You might want to put this file into a directory where only you have access."
   :group 'org-mobile
+  :version "24.1"
   :type 'directory)
 
 (defcustom org-mobile-encryption-password ""
@@ -109,6 +114,7 @@ it, this also limits the security of this approach.  You can also leave
 this variable empty - Org will then ask for the password once per Emacs
 session."
   :group 'org-mobile
+  :version "24.1"
   :type '(string :tag "Password"))
 
 (defvar org-mobile-encryption-password-session nil)
@@ -133,7 +139,7 @@ been appended to the file given here.  This file should be in
 This should not be changed, because MobileOrg assumes this name.")
 
 (defcustom org-mobile-index-file "index.org"
-  "The index file with inks to all Org files that should be loaded by MobileOrg.
+  "The index file with links to all Org files that should be loaded by MobileOrg.
 Relative to `org-mobile-directory'.  The Address field in the MobileOrg setup
 should point to this file."
   :group 'org-mobile
@@ -148,6 +154,7 @@ custom   all custom agendas defined by the user
 all      the custom agendas and the default ones
 list     a list of selection key(s) as string."
   :group 'org-mobile
+  :version "24.1"
   :type '(choice
 	  (const :tag "Default Agendas" default)
 	  (const :tag "Custom Agendas" custom)
@@ -270,7 +277,7 @@ Also exclude files matching `org-mobile-files-exclude-regexp'."
 		     (t nil)))
 		  org-mobile-files)))
 	 (files (delete
-		 nil 
+		 nil
 		 (mapcar (lambda (f)
 			   (unless (and (not (string= org-mobile-files-exclude-regexp ""))
 					(string-match org-mobile-files-exclude-regexp f))
@@ -301,13 +308,13 @@ create all custom agenda views, for upload to the mobile phone."
   (interactive)
   (let ((a-buffer (get-buffer org-agenda-buffer-name)))
     (let ((org-agenda-buffer-name "*SUMO*")
-	  (org-agenda-filter org-agenda-filter)
+	  (org-agenda-tag-filter org-agenda-tag-filter)
 	  (org-agenda-redo-command org-agenda-redo-command))
       (save-excursion
 	(save-window-excursion
+	  (run-hooks 'org-mobile-pre-push-hook)
 	  (org-mobile-check-setup)
 	  (org-mobile-prepare-file-lists)
-	  (run-hooks 'org-mobile-pre-push-hook)
 	  (message "Creating agendas...")
 	  (let ((inhibit-redisplay t)) (org-mobile-create-sumo-agenda))
 	  (message "Creating agendas...done")
@@ -497,7 +504,7 @@ agenda view showing the flagged items."
 				 org-mobile-directory))
     (save-excursion
       (setq buf (find-file file))
-      (when (and (= (point-min) (point-max))) 
+      (when (and (= (point-min) (point-max)))
 	(insert "\n")
 	(save-buffer)
 	(when org-mobile-use-encryption
@@ -575,8 +582,9 @@ The table of checksums is written to the file mobile-checksums."
 				  " " match "</after>"))
 		    settings))
 	(push (list type match settings) new))
-       ((symbolp (nth 2 e))
-	;; A user-defined function, not sure how to handle that yet
+       ((or (functionp (nth 2 e)) (symbolp (nth 2 e)))
+	;; A user-defined function, which can do anything, so simply
+	;; ignore it.
 	)
        (t
 	;; a block agenda
@@ -630,12 +638,12 @@ The table of checksums is written to the file mobile-checksums."
 		      (get-text-property (point) 'org-marker)))
 	  (setq sexp (member (get-text-property (point) 'type)
 			     '("diary" "sexp")))
-	  (if (setq pl (get-text-property (point) 'prefix-length))
+	  (if (setq pl (text-property-any (point) (point-at-eol) 'org-heading t))
 	      (progn
 		(setq prefix (org-trim (buffer-substring
-					(point) (+ (point) pl)))
+					(point) pl))
 		      line (org-trim (buffer-substring
-				      (+ (point) pl)
+				      pl
 				      (point-at-eol))))
 		(delete-region (point-at-bol) (point-at-eol))
 		(insert line "<before>" prefix "</before>")
@@ -908,7 +916,7 @@ If BEG and END are given, only do this in that region."
 				   (buffer-file-name (current-buffer))))))
 		(error (setq org-mobile-error msg))))
 	    (when org-mobile-error
-	      (switch-to-buffer (marker-buffer marker))
+	      (org-pop-to-buffer-same-window (marker-buffer marker))
 	      (goto-char marker)
 	      (incf cnt-error)
 	      (insert (if (stringp (nth 1 org-mobile-error))
@@ -1095,7 +1103,4 @@ A and B must be strings or nil."
 
 (provide 'org-mobile)
 
-;; arch-tag: ace0e26c-58f2-4309-8a61-05ec1535f658
-
 ;;; org-mobile.el ends here
-

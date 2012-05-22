@@ -1,12 +1,10 @@
 ;;; org-icalendar.el --- iCalendar export for Org-mode
 
-;; Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010
-;;   Free Software Foundation, Inc.
+;; Copyright (C) 2004-2012 Free Software Foundation, Inc.
 
 ;; Author: Carsten Dominik <carsten at orgmode dot org>
 ;; Keywords: outlines, hypermedia, calendar, wp
 ;; Homepage: http://orgmode.org
-;; Version: 7.5
 ;;
 ;; This file is part of GNU Emacs.
 ;;
@@ -56,6 +54,7 @@ for timed events.  If non-zero, alarms are created.
 - The alarm will go off N minutes before the event
 - only a DISPLAY action is defined."
   :group 'org-export-icalendar
+  :version "24.1"
   :type 'integer)
 
 (defcustom org-icalendar-combined-name "OrgMode"
@@ -66,6 +65,7 @@ for timed events.  If non-zero, alarms are created.
 (defcustom org-icalendar-combined-description nil
   "Calendar description for the combined iCalendar (all agenda files)."
   :group 'org-export-icalendar
+  :version "24.1"
   :type 'string)
 
 (defcustom org-icalendar-use-plain-timestamp t
@@ -76,6 +76,7 @@ for timed events.  If non-zero, alarms are created.
 (defcustom org-icalendar-honor-noexport-tag nil
   "Non-nil means don't export entries with a tag in `org-export-exclude-tags'."
   :group 'org-export-icalendar
+  :version "24.1"
   :type 'boolean)
 
 (defcustom org-icalendar-use-deadline '(event-if-not-todo todo-due)
@@ -215,6 +216,7 @@ Interesting value are:
  - \":%Y%m%dT%H%M%SZ\" for time expressed in Universal Time"
 
   :group 'org-export-icalendar
+  :version "24.1"
   :type '(choice
 	  (const :tag "Local time" ":%Y%m%dT%H%M%S")
 	  (const :tag "Explicit local time" ";TZID=%Z:%Y%m%dT%H%M%S")
@@ -419,7 +421,7 @@ When COMBINE is non nil, add the category to each line."
 	  (let ((t1 (ignore-errors (org-parse-time-string ts 'nodefault))))
 	    (if (and (> org-icalendar-alarm-time 0)
 		     (car t1) (nth 1 t1) (nth 2 t1))
-		(setq alarm (format "\nBEGIN:VALARM\nACTION:DISPLAY\nDESCRIPTION:%s\nTRIGGER:-P0D0H%dM0S\nEND:VALARM" summary org-icalendar-alarm-time))
+		(setq alarm (format "\nBEGIN:VALARM\nACTION:DISPLAY\nDESCRIPTION:%s\nTRIGGER:-P0DT0H%dM0S\nEND:VALARM" summary org-icalendar-alarm-time))
 	      (setq alarm ""))
 	    )
 	  (if (string-match org-bracket-link-regexp summary)
@@ -432,7 +434,10 @@ When COMBINE is non nil, add the category to each line."
 	  (if scheduledp (setq summary (concat "S: " summary)))
 	  (if (string-match "\\`<%%" ts)
 	      (with-current-buffer sexp-buffer
-		(insert (substring ts 1 -1) " " summary "\n"))
+		(let ((entry (substring ts 1 -1)))
+		  (put-text-property 0 1 'uid
+				     (concat " " prefix uid) entry)
+		  (insert entry " " summary "\n")))
 	    (princ (format "BEGIN:VEVENT
 UID: %s
 %s
@@ -682,5 +687,4 @@ a time), or the day by one (if it does not contain a time)."
 
 (provide 'org-icalendar)
 
-;; arch-tag: 2dee2b6e-9211-4aee-8a47-a3c7e5bc30cf
 ;;; org-icalendar.el ends here

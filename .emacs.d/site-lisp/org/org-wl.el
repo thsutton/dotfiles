@@ -1,13 +1,11 @@
 ;;; org-wl.el --- Support for links to Wanderlust messages from within Org-mode
 
-;; Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010
-;;   Free Software Foundation, Inc.
+;; Copyright (C) 2004-2012 Free Software Foundation, Inc.
 
 ;; Author: Tokuya Kameshima <kames at fa2 dot so-net dot ne dot jp>
 ;;         David Maus <dmaus at ictsoc dot de>
 ;; Keywords: outlines, hypermedia, calendar, wp
 ;; Homepage: http://orgmode.org
-;; Version: 7.5
 ;;
 ;; This file is part of GNU Emacs.
 ;;
@@ -48,11 +46,13 @@
 (defcustom org-wl-link-remove-filter nil
   "Remove filter condition if message is filter folder."
   :group 'org-wl
+  :version "24.1"
   :type 'boolean)
 
 (defcustom org-wl-shimbun-prefer-web-links nil
   "If non-nil create web links for shimbun messages."
   :group 'org-wl
+  :version "24.1"
   :type 'boolean)
 
 (defcustom org-wl-nntp-prefer-web-links nil
@@ -60,16 +60,19 @@
 When folder name contains string \"gmane\" link to gmane,
 googlegroups otherwise."
   :type 'boolean
+  :version "24.1"
   :group 'org-wl)
 
 (defcustom org-wl-disable-folder-check t
   "Disable check for new messages when open a link."
   :type 'boolean
+  :version "24.1"
   :group 'org-wl)
 
 (defcustom org-wl-namazu-default-index nil
   "Default namazu search index."
   :type 'directory
+  :version "24.1"
   :group 'org-wl)
 
 ;; Declare external functions and variables
@@ -119,7 +122,7 @@ googlegroups otherwise."
 (defun org-wl-folder-type (folder)
   "Return symbol that indicates the type of FOLDER.
 FOLDER is the wanderlust folder name.  The first character of the
-folder name determines the the folder type."
+folder name determines the folder type."
   (let* ((indicator (substring folder 0 1))
 	 (type (cdr (assoc indicator org-wl-folder-types))))
     ;; maybe access or file folder
@@ -309,7 +312,5 @@ for namazu index."
 	     (wl-summary-redisplay))))))
 
 (provide 'org-wl)
-
-;; arch-tag: 29b75a0f-ef2e-430b-8abc-acff75bde54a
 
 ;;; org-wl.el ends here

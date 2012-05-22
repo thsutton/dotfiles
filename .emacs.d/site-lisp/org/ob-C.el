@@ -1,11 +1,10 @@
 ;;; ob-C.el --- org-babel functions for C and similar languages
 
-;; Copyright (C) 2010  Free Software Foundation, Inc.
+;; Copyright (C) 2010-2012  Free Software Foundation, Inc.
 
 ;; Author: Eric Schulte
 ;; Keywords: literate programming, reproducible research
 ;; Homepage: http://orgmode.org
-;; Version: 7.5
 
 ;; This file is part of GNU Emacs.
 
@@ -38,6 +37,8 @@
 (declare-function org-entry-get "org"
 		  (pom property &optional inherit literal-nil))
 
+
+(defvar org-babel-tangle-lang-exts)
 (add-to-list 'org-babel-tangle-lang-exts '("C++" . "cpp"))
 
 (defvar org-babel-default-header-args:C '())
@@ -87,7 +88,9 @@ or `org-babel-execute:C++'."
 			(cond
 			 ((equal org-babel-c-variant 'c) ".c")
 			 ((equal org-babel-c-variant 'cpp) ".cpp"))))
-         (tmp-bin-file (org-babel-temp-file "C-bin-"))
+         (tmp-bin-file (org-babel-temp-file
+			"C-bin-"
+			(if (equal system-type 'windows-nt) ".exe" "")))
          (cmdline (cdr (assoc :cmdline params)))
          (flags (cdr (assoc :flags params)))
          (full-body (org-babel-C-expand body params))
@@ -149,7 +152,7 @@ it's header arguments."
   "Wrap body in a \"main\" function call if none exists."
   (if (string-match "^[ \t]*[intvod]+[ \t\n\r]*main[ \t]*(.*)" body)
       body
-    (format "int main() {\n%s\n}\n" body)))
+    (format "int main() {\n%s\nreturn(0);\n}\n" body)))
 
 (defun org-babel-prep-session:C (session params)
   "This function does nothing as C is a compiled language with no
@@ -178,7 +181,7 @@ of the same value."
       (format "int %S = %S;" var val))
      ((floatp val)
       (format "double %S = %S;" var val))
-     ((or (characterp val))
+     ((or (integerp val))
       (format "char %S = '%S';" var val))
      ((stringp val)
       (format "char %S[%d] = \"%s\";"
@@ -189,6 +192,6 @@ of the same value."
 
 (provide 'ob-C)
 
-;; arch-tag: 8f49e462-54e3-417b-9a8d-423864893b37
+
 
 ;;; ob-C.el ends here

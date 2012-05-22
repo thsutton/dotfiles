@@ -1,12 +1,10 @@
 ;;; org-faces.el --- Face definitions for Org-mode.
 
-;; Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011
-;;   Free Software Foundation, Inc.
+;; Copyright (C) 2004-2012 Free Software Foundation, Inc.
 
 ;; Author: Carsten Dominik <carsten at orgmode dot org>
 ;; Keywords: outlines, hypermedia, calendar, wp
 ;; Homepage: http://orgmode.org
-;; Version: 7.5
 ;;
 ;; This file is part of GNU Emacs.
 ;;
@@ -50,6 +48,11 @@
   "Faces in Org-mode."
   :tag "Org Faces"
   :group 'org-appearance)
+
+(defface org-default
+  (org-compatible-face 'default nil)
+  "Face used for default text."
+  :group 'org-faces)
 
 (defface org-hide
   '((((background light)) (:foreground "white"))
@@ -282,6 +285,16 @@ column view defines special faces for each outline level.  See the file
   "Face for date/time stamps."
   :group 'org-faces)
 
+(defface org-date-selected
+  (org-compatible-face nil
+    '((((class color) (min-colors 16) (background light)) (:foreground "Red1" :bold nil))
+      (((class color) (min-colors 16) (background dark))  (:foreground "Pink" :bold nil))
+      (((class color) (min-colors 8)  (background light)) (:foreground "red"  :bold nil))
+      (((class color) (min-colors 8)  (background dark))  (:foreground "red"  :bold nil))
+      (t (:inverse-video t))))
+  "Face for highlighting the calendar day when using `org-read-date'."
+  :group 'org-faces)
+
 (defface org-sexp-date
   '((((class color) (background light)) (:foreground "Purple"))
     (((class color) (background dark)) (:foreground "Cyan"))
@@ -348,6 +361,7 @@ keywords will then be interpreted as either foreground or background
 color."
   :group 'org-faces
   :group 'org-todo
+  :version "24.1"
   :type '(repeat
 	  (cons (choice (const todo) (const tag) (const priority))
 		(choice (const :foreground) (const :background)))))
@@ -544,6 +558,7 @@ follows a #+DATE:, #+AUTHOR: or #+EMAIL: keyword."
 When nil, format these as normal Org.  This is the default, because the
 content of these blocks will still be treated as Org syntax."
   :group 'org-faces
+  :version "24.1"
   :type 'boolean)
 
 (defface org-clock-overlay ;; copied from secondary-selection
@@ -669,6 +684,18 @@ month and 365.24 days for a year)."
   "Face for showing the agenda restriction lock."
   :group 'org-faces)
 
+(defface org-agenda-filter-tags
+  (org-compatible-face 'modeline
+    nil)
+  "Face for tag(s) in the mode-line when filtering the agenda."
+  :group 'org-faces)
+
+(defface org-agenda-filter-category
+  (org-compatible-face 'modeline
+    nil)
+  "Face for tag(s) in the mode-line when filtering the agenda."
+  :group 'org-faces)
+
 (defface org-time-grid ;; originally copied from font-lock-variable-name-face
   (org-compatible-face nil
     '((((class color) (min-colors 16) (background light)) (:foreground "DarkGoldenrod"))
@@ -684,6 +711,18 @@ month and 365.24 days for a year)."
   (org-compatible-face 'default
     nil)
   "Face used for agenda entries that come from the Emacs diary."
+  :group 'org-faces)
+
+(defface org-agenda-calendar-event
+  (org-compatible-face 'default
+    nil)
+  "Face used to show events and appointments in the agenda."
+  :group 'org-faces)
+
+(defface org-agenda-calendar-sexp
+  (org-compatible-face 'default
+    nil)
+  "Face used to show events computed from a S-expression."
   :group 'org-faces)
 
 (defconst org-level-faces
@@ -705,6 +744,7 @@ If nil, then all levels >=org-n-level-faces are styled like
 level org-n-level-faces"
  :group 'org-appearance
  :group 'org-faces
+ :version "24.1"
  :type 'boolean)
 
 (defface org-latex-and-export-specials
@@ -730,7 +770,5 @@ level org-n-level-faces"
   :background "red")
 
 (provide 'org-faces)
-
-;; arch-tag: 9dab5f91-c4b9-4d6f-bac3-1f6211ad0a04
 
 ;;; org-faces.el ends here

@@ -1,10 +1,8 @@
 ;;; org-exp-blocks.el --- pre-process blocks when exporting org files
 
-;; Copyright (C) 2009, 2010
-;;   Free Software Foundation, Inc.
+;; Copyright (C) 2009-2012 Free Software Foundation, Inc.
 
 ;; Author: Eric Schulte
-;; Version: 7.5
 
 ;; This file is part of GNU Emacs.
 ;;
@@ -59,9 +57,9 @@
 ;;        using the dot utility.  For information on dot see
 ;;        http://www.graphviz.org/
 ;;
-;; comment :: Wrap comments with titles and author information, in
-;;            their own divs with author-specific ids allowing for css
-;;            coloring of comments based on the author.
+;; export-comment :: Wrap comments with titles and author information,
+;;            in their own divs with author-specific ids allowing for
+;;            css coloring of comments based on the author.
 ;;
 ;;; Adding new blocks
 ;;
@@ -75,13 +73,7 @@
 (eval-when-compile
   (require 'cl))
 (require 'org)
-
-(defvar org-exp-blocks-block-regexp
-  (concat
-   "^\\([ \t]*\\)#\\+begin_\\(\\S-+\\)"
-   "[ \t]*\\(.*\\)?[\r\n]\\([^\000]*?\\)[\r\n]*[ \t]*"
-   "#\\+end_\\S-+.*[\r\n]?")
-  "Regular expression used to match blocks by org-exp-blocks.")
+(require 'find-func)
 
 (defun org-export-blocks-set (var value)
   "Set the value of `org-export-blocks' and install fontification."
@@ -96,7 +88,7 @@
 	value))
 
 (defcustom org-export-blocks
-  '((comment org-export-blocks-format-comment t)
+  '((export-comment org-export-blocks-format-comment t)
     (ditaa org-export-blocks-format-ditaa nil)
     (dot org-export-blocks-format-dot nil))
   "Use this alist to associate block types with block exporting functions.
@@ -144,6 +136,7 @@ export function should accept three arguments."
 (defcustom org-export-blocks-postblock-hook nil
   "Run after blocks have been processed with `org-export-blocks-preprocess'."
   :group 'org-export-general
+  :version "24.1"
   :type 'hook)
 
 (defun org-export-blocks-html-quote (body &optional open close)
@@ -175,32 +168,56 @@ which defaults to the value of `org-export-blocks-witheld'."
   (save-window-excursion
     (let ((case-fold-search t)
 	  (types '())
-	  indentation type func start body headers preserve-indent progress-marker)
+	  matched indentation type func
+	  start end body headers preserve-indent progress-marker)
       (flet ((interblock (start end)
 			 (mapcar (lambda (pair) (funcall (second pair) start end))
 				 org-export-interblocks)))
 	(goto-char (point-min))
 	(setq start (point))
-	(while (re-search-forward org-exp-blocks-block-regexp nil t)
-          (setq indentation (length (match-string 1)))
-	  (setq type (intern (downcase (match-string 2))))
-	  (setq headers (save-match-data (org-split-string (match-string 3) "[ \t]+")))
-	  (setq body (match-string 4))
-	  (setq preserve-indent (or org-src-preserve-indentation (member "-i" headers)))
-	  (unless preserve-indent
-	    (setq body (save-match-data (org-remove-indentation body))))
-	  (unless (memq type types) (setq types (cons type types)))
-	  (save-match-data (interblock start (match-beginning 0)))
-	  (when (setq func (cadr (assoc type org-export-blocks)))
-            (let ((replacement (save-match-data
-                                 (if (memq type org-export-blocks-witheld) ""
-                                   (apply func body headers)))))
-              (when replacement
-                (replace-match replacement t t)
-                (unless preserve-indent
-                  (indent-code-rigidly
-                   (match-beginning 0) (match-end 0) indentation)))))
-	  (setq start (match-end 0)))
+	(let ((beg-re "^\\([ \t]*\\)#\\+begin_\\(\\S-+\\)[ \t]*\\(.*\\)?[\r\n]"))
+	  (while (re-search-forward beg-re nil t)
+	    (let* ((match-start (copy-marker (match-beginning 0)))
+		   (body-start (copy-marker (match-end 0)))
+		   (indentation (length (match-string 1)))
+		   (inner-re (format "^[ \t]*#\\+\\(begin\\|end\\)_%s"
+				     (regexp-quote (downcase (match-string 2)))))
+		   (type (intern (downcase (match-string 2))))
+		   (headers (save-match-data
+			      (org-split-string (match-string 3) "[ \t]+")))
+		   (balanced 1)
+		   (preserve-indent (or org-src-preserve-indentation
+					(member "-i" headers)))
+		   match-end)
+	      (while (and (not (zerop balanced))
+			  (re-search-forward inner-re nil t))
+		(if (string= (downcase (match-string 1)) "end")
+		    (decf balanced)
+		  (incf balanced)))
+	      (when (not (zerop balanced))
+		(error "unbalanced begin/end_%s blocks with %S"
+		       type (buffer-substring match-start (point))))
+	      (setq match-end (copy-marker (match-end 0)))
+	      (unless preserve-indent
+		(setq body (save-match-data (org-remove-indentation
+					     (buffer-substring
+					      body-start (match-beginning 0))))))
+	      (unless (memq type types) (setq types (cons type types)))
+	      (save-match-data (interblock start match-start))
+	      (when (setq func (cadr (assoc type org-export-blocks)))
+		(let ((replacement (save-match-data
+				     (if (memq type org-export-blocks-witheld) ""
+				       (apply func body headers)))))
+		  (when replacement
+		    (delete-region match-start match-end)
+		    (goto-char match-start) (insert replacement)
+		    (unless preserve-indent
+		      (indent-code-rigidly match-start (point) indentation)))))
+	      ;; cleanup markers
+	      (set-marker match-start nil)
+	      (set-marker body-start nil)
+	      (set-marker match-end nil))
+	    (setq start (point))))
 	(interblock start (point-max))
 	(run-hooks 'org-export-blocks-postblock-hook)))))
 
@@ -209,7 +226,7 @@ which defaults to the value of `org-export-blocks-witheld'."
 
 ;;--------------------------------------------------------------------------------
 ;; ditaa: create images from ASCII art using the ditaa utility
-(defvar org-ditaa-jar-path (expand-file-name
+(defcustom org-ditaa-jar-path (expand-file-name
 			    "ditaa.jar"
 			    (file-name-as-directory
 			     (expand-file-name
@@ -217,8 +234,10 @@ which defaults to the value of `org-export-blocks-witheld'."
 			      (file-name-as-directory
 			       (expand-file-name
 				"../contrib"
-				(file-name-directory (or load-file-name buffer-file-name)))))))
-  "Path to the ditaa jar executable.")
+				(file-name-directory (find-library-name "org")))))))
+  "Path to the ditaa jar executable."
+  :group 'org-babel
+  :type 'string)
 
 (defvar org-export-current-backend) ; dynamically bound in org-exp.el
 (defun org-export-blocks-format-ditaa (body &rest headers)
@@ -346,7 +365,7 @@ other backends, it converts the comment into an EXAMPLE segment."
 	      (if owner (format " id=\"org-comment-%s\" " owner))
 	      ">\n"
 	      (if owner (concat "<b>" owner "</b> ") "")
-	      (if (and title (> (length title) 0)) (concat " -- " title "</br>\n") "</br>\n")
+	      (if (and title (> (length title) 0)) (concat " -- " title "<br/>\n") "<br/>\n")
 	      "<p>\n"
 	      "#+END_HTML\n"
 	      body
@@ -364,5 +383,4 @@ other backends, it converts the comment into an EXAMPLE segment."
 
 (provide 'org-exp-blocks)
 
-;; arch-tag: 1c365fe9-8808-4f72-bb15-0b00f36d8024
 ;;; org-exp-blocks.el ends here

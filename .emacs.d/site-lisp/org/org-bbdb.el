@@ -1,13 +1,11 @@
 ;;; org-bbdb.el --- Support for links to BBDB entries from within Org-mode
 
-;; Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010
-;;   Free Software Foundation, Inc.
+;; Copyright (C) 2004-2012  Free Software Foundation, Inc.
 
-;; Author: Carsten Dominik <carsten at orgmode dot org>,
-;;         Thomas Baumann <thomas dot baumann at ch dot tum dot de>
+;; Authors: Carsten Dominik <carsten at orgmode dot org>
+;;       Thomas Baumann <thomas dot baumann at ch dot tum dot de>
 ;; Keywords: outlines, hypermedia, calendar, wp
 ;; Homepage: http://orgmode.org
-;; Version: 7.5
 ;;
 ;; This file is part of GNU Emacs.
 ;;
@@ -114,6 +112,9 @@
           (&optional dont-check-disk already-in-db-buffer))
 (declare-function bbdb-split "ext:bbdb" (string separators))
 (declare-function bbdb-string-trim "ext:bbdb" (string))
+(declare-function bbdb-record-get-field "ext:bbdb" (record field))
+(declare-function bbdb-search-name "ext:bbdb-com" (regexp &optional layout))
+(declare-function bbdb-search-organization "ext:bbdb-com" (regexp &optional layout))
 
 (declare-function calendar-leap-year-p "calendar" (year))
 (declare-function diary-ordinal-suffix "diary-lib" (n))
@@ -197,8 +198,11 @@ date year)."
   "Store a link to a BBDB database entry."
   (when (eq major-mode 'bbdb-mode)
     ;; This is BBDB, we make this link!
-    (let* ((name (bbdb-record-name (bbdb-current-record)))
-	   (company (bbdb-record-getprop (bbdb-current-record) 'company))
+    (let* ((rec (bbdb-current-record))
+           (name (bbdb-record-name rec))
+	   (company (if (fboundp 'bbdb-record-getprop)
+                        (bbdb-record-getprop rec 'company)
+                      (car (bbdb-record-get-field rec 'organization))))
 	   (link (org-make-link "bbdb:" name)))
       (org-store-link-props :type "bbdb" :name name :company company
 			    :link link :description name)
@@ -217,27 +221,52 @@ italicized, in all other cases it is left unchanged."
 
 (defun org-bbdb-open (name)
   "Follow a BBDB link to NAME."
-  (require 'bbdb)
+  (require 'bbdb-com)
   (let ((inhibit-redisplay (not debug-on-error))
 	(bbdb-electric-p nil))
-    (catch 'exit
-      ;; Exact match on name
-      (bbdb-name (concat "\\`" name "\\'") nil)
-      (if (< 0 (buffer-size (get-buffer "*BBDB*"))) (throw 'exit nil))
-      ;; Exact match on name
-      (bbdb-company (concat "\\`" name "\\'") nil)
-      (if (< 0 (buffer-size (get-buffer "*BBDB*"))) (throw 'exit nil))
-      ;; Partial match on name
-      (bbdb-name name nil)
-      (if (< 0 (buffer-size (get-buffer "*BBDB*"))) (throw 'exit nil))
-      ;; Partial match on company
-      (bbdb-company name nil)
-      (if (< 0 (buffer-size (get-buffer "*BBDB*"))) (throw 'exit nil))
-      ;; General match including network address and notes
-      (bbdb name nil)
-      (when (= 0 (buffer-size (get-buffer "*BBDB*")))
-	(delete-window (get-buffer-window "*BBDB*"))
-	(error "No matching BBDB record")))))
+    (if (fboundp 'bbdb-name)
+        (org-bbdb-open-old name)
+      (org-bbdb-open-new name))))
+
+(defun org-bbdb-open-old (name)
+  (catch 'exit
+    ;; Exact match on name
+    (bbdb-name (concat "\\`" name "\\'") nil)
+    (if (< 0 (buffer-size (get-buffer "*BBDB*"))) (throw 'exit nil))
+    ;; Exact match on name
+    (bbdb-company (concat "\\`" name "\\'") nil)
+    (if (< 0 (buffer-size (get-buffer "*BBDB*"))) (throw 'exit nil))
+    ;; Partial match on name
+    (bbdb-name name nil)
+    (if (< 0 (buffer-size (get-buffer "*BBDB*"))) (throw 'exit nil))
+    ;; Partial match on company
+    (bbdb-company name nil)
+    (if (< 0 (buffer-size (get-buffer "*BBDB*"))) (throw 'exit nil))
+    ;; General match including network address and notes
+    (bbdb name nil)
+    (when (= 0 (buffer-size (get-buffer "*BBDB*")))
+      (delete-window (get-buffer-window "*BBDB*"))
+      (error "No matching BBDB record"))))
+
+(defun org-bbdb-open-new (name)
+  (catch 'exit
+    ;; Exact match on name
+    (bbdb-search-name (concat "\\`" name "\\'") nil)
+    (if (< 0 (buffer-size (get-buffer "*BBDB*"))) (throw 'exit nil))
+    ;; Exact match on name
+    (bbdb-search-organization (concat "\\`" name "\\'") nil)
+    (if (< 0 (buffer-size (get-buffer "*BBDB*"))) (throw 'exit nil))
+    ;; Partial match on name
+    (bbdb-search-name name nil)
+    (if (< 0 (buffer-size (get-buffer "*BBDB*"))) (throw 'exit nil))
+    ;; Partial match on company
+    (bbdb-search-organization name nil)
+    (if (< 0 (buffer-size (get-buffer "*BBDB*"))) (throw 'exit nil))
+    ;; General match including network address and notes
+    (bbdb name nil)
+    (when (= 0 (buffer-size (get-buffer "*BBDB*")))
+      (delete-window (get-buffer-window "*BBDB*"))
+      (error "No matching BBDB record"))))
 
 (defun org-bbdb-anniv-extract-date (time-str)
   "Convert YYYY-MM-DD to (month date year).
@@ -391,7 +420,5 @@ END:VEVENT\n"
 		     categ)))))
 
 (provide 'org-bbdb)
-
-;; arch-tag: 9e4f275d-d080-48c1-b040-62247f66b5c2
 
 ;;; org-bbdb.el ends here

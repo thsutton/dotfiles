@@ -1,13 +1,11 @@
 ;;; org-pcomplete.el --- In-buffer completion code
 
-;; Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009, 2010
-;;   Free Software Foundation, Inc.
+;; Copyright (C) 2004-2012  Free Software Foundation, Inc.
 ;;
 ;; Author: Carsten Dominik <carsten at orgmode dot org>
 ;;         John Wiegley <johnw at gnu dot org>
 ;; Keywords: outlines, hypermedia, calendar, wp
 ;; Homepage: http://orgmode.org
-;; Version: 7.5
 ;;
 ;; This file is part of GNU Emacs.
 ;;
@@ -71,7 +69,7 @@ The return value is a string naming the thing at point."
 	(re-search-backward "^[ \t]*#\\+\\([A-Z_]+\\):.*"
 			    (line-beginning-position) t))
       (cons "file-option" (match-string-no-properties 1)))
-     ((string-match "\\`[ \t]*#\\+[a-zA-Z]*\\'" line-to-here)
+     ((string-match "\\`[ \t]*#\\+[a-zA-Z_]*\\'" line-to-here)
       (cons "file-option" nil))
      ((equal (char-before beg) ?\[)
       (cons "link" nil))
@@ -146,9 +144,9 @@ When completing for #+STARTUP, for example, this function returns
 			      (if (string-match "^#\\+\\([A-Z_]+:?\\)" x)
 				  (match-string 1 x)))
 			    (org-split-string (org-get-current-options) "\n"))
-		    org-additional-option-like-keywords)))))
+		    (copy-sequence org-additional-option-like-keywords))))))
    (substring pcomplete-stub 2)))
-  
+
 (defvar org-startup-options)
 (defun pcomplete/org-mode/file-option/startup ()
   "Complete arguments for the #+STARTUP file option."
@@ -276,7 +274,5 @@ Complete a language in the first field, the header arguments and switches."
 ;;;; Finish up
 
 (provide 'org-pcomplete)
-
-;; arch-tag: 
 
 ;;; org-pcomplete.el ends here
