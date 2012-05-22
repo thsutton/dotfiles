@@ -13,4 +13,4 @@
 	default = current
 [core]
 	quotepath = false
-	excludesfile = /Users/thomas/.gitignore
+	excludesfile = ~/.gitignore

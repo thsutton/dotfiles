@@ -31,6 +31,9 @@
   "Major mode for editing Markdown files" t)
 (add-to-list 'auto-mode-alist
 	     '("\\.txt" . markdown-mode))
+(add-to-list 'auto-mode-alist
+	     '("\\.md" . markdown-mode))
+
 
 ; Enable auto-fill mode when editing Markdown.
 (add-hook 'markdown-mode-hook 'auto-fill-mode)
@@ -64,6 +67,7 @@
 ;;
 ;; Ruby
 ;;
+
 (autoload 'ruby-mode "ruby-mode"
   "Major mode for ruby files" t)
 (add-to-list 'auto-mode-alist
@@ -86,16 +90,23 @@
 
 (autoload 'haskell-mode "haskell-site-file.el"
   "Major mode for editing Haskell files" t)
+(autoload 'haskell-cabal-mode "haskell-site-file.el"
+  "Major mode for editing Cabal files" t)
 (add-to-list 'auto-mode-alist
 	     '("\\.hs" . haskell-mode))
 (add-to-list 'auto-mode-alist
 	     '("\\.lhs" . haskell-mode))
+(add-to-list 'auto-mode-alist
+	     '("\\.cabal" . haskell-cabal-mode))
+
 
 ; Enable automatic documentation display
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 ; Enable intelligent indentation
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-
+(add-hook 'haskell-cabal-mode-hook
+	  (lambda () (setq indent-tabs-mode nil))
+	  )
 
 ;;
 ;; DVC
@@ -159,6 +170,7 @@
 (add-to-list 'auto-mode-alist
   '("nginx/" . nginx-mode))
 
+
 ;;
 ;; Org mode
 ;;
@@ -176,3 +188,17 @@
 (setq org-agenda-files (list "~/org/work.org"
 			     "~/org/school.org"
                              "~/org/home.org"))
+
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(require-final-newline t))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(default ((t (:inherit nil :stipple nil :background "White" :foreground "Black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "apple" :family "Monaco")))))
