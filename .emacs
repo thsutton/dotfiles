@@ -1,4 +1,5 @@
 
+(setq column-number-mode t)
 
 ;;
 ;; Add local lisp and info directories
@@ -107,17 +108,18 @@
 ;; PHP Mode
 ;;
 
-(autoload 'php-mode "php-mode-improved.el"
+(autoload 'php-mode "php-mode.el"
   "Major mode for editing PHP files" t)
-(add-to-list 'auto-mode-alist
-	     '("\\.php" . php-mode))
-(setq php-mode-hook
-      (function (lambda ()
-		  (setq indent-tabs-mode nil)
-		  (setq php-mode-warn-if-mumamo-off t)
-		  )
-		))
 
+(autoload 'drupal-mode "drupal-mode.el"
+  "Major mode for editing Drupal PHP files" t)
+
+(add-to-list 'auto-mode-alist
+	     '("\\.\\(module\\|test\\|install\\|theme\\)$" . drupal-mode))
+(add-to-list 'auto-mode-alist
+	     '("\\.\\(php\\|inc\\)$" . php-mode))
+(add-to-list 'auto-mode-alist
+	     '("\\.info" . conf-windows-mode))
 
 ;;
 ;; Javascript Mode
@@ -160,17 +162,17 @@
 ;;
 ;; Org mode
 ;;
-;; (require 'org-install)
-;; (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-;; (define-key global-map "\C-cl" 'org-store-link)
-;; (define-key global-map "\C-ca" 'org-agenda)
-;; (setq org-log-done t)
+(require 'org-install)
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
+(define-key global-map "\C-cl" 'org-store-link)
+(define-key global-map "\C-ca" 'org-agenda)
+(setq org-log-done t)
 ;; ;; Set to the location of your Org files on your local system
-;; (setq org-directory "~/org")
+(setq org-directory "~/org")
 ;; ;; Set to the name of the file where new notes will be stored
-;; (setq org-mobile-inbox-for-pull "~/org/flagged.org")
+(setq org-mobile-inbox-for-pull "~/org/flagged.org")
 ;; ;; Set to <your Dropbox root directory>/MobileOrg.
-;; (setq org-mobile-directory "~/Dropbox/MobileOrg")
-;; (setq org-agenda-files (list "~/org/index.org"
-;;                              "~/org/work.org"
-;;                              "~/org/home.org"))
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
+(setq org-agenda-files (list "~/org/work.org"
+			     "~/org/school.org"
+                             "~/org/home.org"))
