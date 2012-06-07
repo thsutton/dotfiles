@@ -172,6 +172,15 @@
 
 
 ;;
+;; YAML
+;;
+
+(autoload 'yaml-mode "yaml-mode.el"
+  "Major mode for editing YAML files")
+(add-to-list 'auto-mode-alist
+  '("\\.yml$" . yaml-mode))
+
+;;
 ;; Org mode
 ;;
 (require 'org-install)
