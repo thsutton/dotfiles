@@ -112,3 +112,8 @@ fi
 if [ -d "/usr/local/ghc-7.8.3/bin" ]; then
     PATH="/usr/local/ghc-7.8.3/bin:$PATH"
 fi
+
+if [ -d "$HOME/bin" ]; then
+    PATH="$HOME/bin:$PATH"
+fi
+
