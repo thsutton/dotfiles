@@ -2,7 +2,9 @@ set number
 
 set wildmode=longest,list
 
+filetype on
 filetype plugin on
+filetype plugin indent on
 syntax on
 let loaded_matchparen=1
 
@@ -12,6 +14,9 @@ set noerrorbells visualbell t_vb=
 " Spelling
 set spelllang=en_au
 set complete+=kspell
+
+let mapleader=","
+let maplocalleader = g:mapleader
 
 if has("gui_running")
 	set background=light
