@@ -14,7 +14,7 @@ fi
 # Editor
 case "$TERM" in
     xterm*|rxvt*)
-        EDITOR=gvim
+        EDITOR="gvim --nofork"
         ;;
     *)
         EDITOR=vim
