@@ -3,3 +3,5 @@
 	email = me@thomas-sutton.id.au
 [push]
 	default = matching
+[color]
+	ui = auto
