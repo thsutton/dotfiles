@@ -3,13 +3,33 @@ case $- in
       *) return;;
 esac
 
-HISTCONTROL=ignoreboth
-HISTSIZE=1000
-HISTFILESIZE=2000
+# My locale
+if [ -z "$TZ" ]; then
+    export TZ="Australia/Sydney"
+fi
+if [ -z "$LANG" ]; then
+    export LANG="en_AU.UTF-8"
+fi
 
-shopt -s histappend
+# Editor
+case "$TERM" in
+    xterm*|rxvt*)
+        EDITOR=gvim
+        ;;
+    *)
+        EDITOR=vim
+	;;
+esac
+export EDITOR
 
 shopt -s checkwinsize
+
+# Control command history
+shopt -s histappend
+HISTCONTROL=ignoreboth
+HISTFILESIZE=2000
+HISTSIZE=1000
+HISTTIMEFORMAT='%F %T '
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
