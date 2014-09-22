@@ -5,3 +5,5 @@
 *.bak
 *.elc
 _darcs/
+.cabal-sandbox/
+cabal.sandbox.config
