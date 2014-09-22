@@ -7,6 +7,7 @@ filetype plugin on
 filetype plugin indent on
 syntax on
 let loaded_matchparen=1
+set expandtab
 
 set background=dark
 set noerrorbells visualbell t_vb=
@@ -31,7 +32,6 @@ nmap <F8> :TagbarToggle<CR>
 if expand("%:e") == "hs"
     set tabstop=4
     set shiftwidth=4
-    set expandtab
     set autoindent
     set smartindent
     set nocindent
