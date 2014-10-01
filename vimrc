@@ -50,6 +50,7 @@ au FileType markdown setlocal linebreak
 au FileType markdown setlocal nolist
 au FileType markdown setlocal columns=80
 au FileType markdown setlocal spell
+let g:pandoc#modules#disabled = ["folding"]
 
 if expand("%:t") == "COMMIT_EDITMSG"
 	set textwidth=70
