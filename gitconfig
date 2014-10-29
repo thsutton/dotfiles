@@ -11,4 +11,3 @@
 	ui = auto
 [core]
 	quotepath = false
-	excludesfile = ~/.gitignore

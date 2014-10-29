@@ -1,5 +1,10 @@
-.*.swp
+._*
 *~
+*.bak
 .cabal-sandbox/
 cabal.sandbox.config
+_darcs/
 dist/
+.DS_Store
+*.elc
+.*.swp
