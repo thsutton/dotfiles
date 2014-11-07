@@ -1,4 +1,4 @@
-Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+Config { font = "-misc-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
        , borderColor = "black"
        , border = TopB
        , bgColor = "black"
@@ -22,10 +22,18 @@ Config { font = "-misc-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
                                "--normal","green","--high","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
     		    , Run Date "%Y-%m-%d %H:%M:%S" "date" 10
-                    , Run Battery ["-t", "<acstatus><watts> (<left>%)"] 600
+                    , Run BatteryP ["BAT0"]
+                        [ "-t", "<acstatus><left>%"
+                        , "-L", "10", "-H", "80", "-p", "3"
+                        , "--", "-O", "<fc=green>Charging</fc>", "-i", ""
+                        , "-o", "<fc=red>Battery</fc>"
+                        , "-L", "-15", "-H", "-5"
+                        , "-l", "red", "-m", "blue", "-h", "green"
+                        ]
+                        600
                     ]
        , sepChar = "%"
        , alignSep = "}{"
        , template = "%cpu% | %memory% | %wlp1s0% }\
-                    \{ <fc=#ee9a00>%date%</fc>| %YSSY% | %bat%"
+                    \{ <fc=#ee9a00>%date%</fc> | %YSSY% | %battery%"
        }
