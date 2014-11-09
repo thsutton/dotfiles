@@ -25,10 +25,11 @@ Config { font = "-misc-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
                     , Run BatteryP ["BAT0"]
                         [ "-t", "<acstatus><left>%"
                         , "-L", "10", "-H", "80", "-p", "3"
-                        , "--", "-O", "<fc=green>Charging</fc>", "-i", ""
-                        , "-o", "<fc=red>Battery</fc>"
+                        , "--"
+                        , "-O", "<fc=green>Charging</fc>"
+                        , "-i", "Charged"
+                        , "-o", "<fc=yellow>Battery</fc>"
                         , "-L", "-15", "-H", "-5"
-                        , "-l", "red", "-m", "blue", "-h", "green"
                         ]
                         600
                     ]
