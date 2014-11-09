@@ -7,4 +7,6 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
-cabal --sandbox-config-file=$HOME/.xmonad/cabal.sandbox.config exec xmonad 
+[ -n $(which ginn) ] && ginn $HOME/.wishes.xml &
+
+xmonad
