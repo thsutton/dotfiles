@@ -35,7 +35,7 @@ HISTTIMEFORMAT='%F %T'
 [ -d "$HOME/.opam" ] && source "$HOME/.opam/opam-init/init.sh" > /dev/null 2> /dev/null
 
 # Extend $PATH
-[ -d "/usr/local/ghc-head/bin" ] && PATH="/usr/local/ghc-head/bin:$PATH"
+# [ -d "/usr/local/ghc-head/bin" ] && PATH="/usr/local/ghc-head/bin:$PATH"
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
 
 export PATH
