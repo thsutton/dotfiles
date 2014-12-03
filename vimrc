@@ -41,6 +41,9 @@ if expand("%:e") == "hs"
     set iskeyword=a-z,A-Z,_,.,39
 endif
 
+au FileType c       map ff :%!indent -linux<CR>
+au FileType haskell map ff :%!stylish-haskell<CR>
+
 " Markdown
 au BufRead,BufNewFile *.md  set filetype=markdown
 au BufRead,BufNewFile *.txt set filetype=markdown
