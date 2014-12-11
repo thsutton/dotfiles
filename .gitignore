@@ -1,0 +1,6 @@
+/config/htop/
+/config/pulse/*-default-source
+/config/pulse/*-default-sink
+/config/pulse/*.tdb
+/config/pulse/cookie
+config/gtk-2.0/gtkfilechooser.ini
