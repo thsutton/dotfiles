@@ -70,16 +70,16 @@ jobs: $ncpus
 
 haddock
   -- keep-temp-files: False
-  -- hoogle: False
+  hoogle: True
   -- html: False
   -- html-location:
-  -- executables: False
-  -- tests: False
-  -- benchmarks: False
-  -- all:
-  -- internal: False
+  executables: True
+  tests: True
+  benchmarks: True
+  all: True
+  internal: True
   -- css:
-  -- hyperlink-source: False
+  hyperlink-source: True
   -- hscolour-css:
   -- contents-location:
 
