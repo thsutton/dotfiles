@@ -25,3 +25,6 @@
 [submodule "vim/bundle/vim-sensible"]
 	path = vim/bundle/vim-sensible
 	url = https://github.com/tpope/vim-sensible
+[submodule "vim/bundle/haskell-cabal"]
+	path = vim/bundle/haskell-cabal
+	url = https://github.com/Twinside/vim-syntax-haskell-cabal.git
