@@ -11,5 +11,8 @@ myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">" }
 
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
-myConfig = defaultConfig -- { modMask = mod4Mask }
+myConfig = defaultConfig
+    { terminal = "urxvt"
+  --, modMask = mod4Mask
+    }
 
