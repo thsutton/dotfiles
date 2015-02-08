@@ -1,0 +1,11 @@
+#!/bin/sh
+
+PODCAST_SOURCE="$HOME/Music"
+PODCAST_DESTINATION="/tmp/PRIVATE/SONY/PODCASTS"
+
+ACTIVATE_DESTINATION="mkdir -p ${PODCAST_DESTINATION}"
+
+# Minimum time (in minutes) since the last modification.
+#
+# This excludes incomplete files currently being downloaded.
+MIN_AGE=1

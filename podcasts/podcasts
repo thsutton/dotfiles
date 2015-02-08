@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+# Copy podcasts to a device.
+#
+
+set -eu
+
+DIR="$HOME/.podcasts/"
+CONF="$DIR/podcasts.rc"
+LIST="$DIR/podcasts.list"
+HISTORY="$DIR/podcasts.history"
+
+[ -f $CONF ] || { echo "Configuration file missing: $CONF" > /dev/stderr ; exit 2 ; }
+source $CONF
+
+[ -z "$MIN_AGE" ] || MIN_AGE="1"
+
+[ -d "$PODCAST_DESTINATION" ] || { 
+        echo "Activating $PODCAST_DESTINATION" ;
+        [ -n "$ACTIVATE_DESTINATION" ] && $ACTIVATE_DESTINATION ;
+}
+
+touch "$HISTORY"
+
+cat "$LIST" \
+| xargs -n 1 -I % find "${PODCAST_SOURCE}/%" -type f -iname '*.mp3' -cmin "+${MIN_AGE}" -print0 \
+| xargs -0 shasum \
+| while read sum podcast; do
+        name=$(echo "$podcast" | sed -Ee "s#^$PODCAST_SOURCE/##")
+        dir=$(dirname "$name")
+        if grep -q $sum "$HISTORY"; then
+                echo "Skipping $name" > /dev/null
+        else
+                echo "Copying \"$name\""
+                echo -e "$sum\t$name" >> "$HISTORY"
+                mkdir -p "${PODCAST_DESTINATION}/${dir}"
+                rsync "${PODCAST_SOURCE}/${name}" "${PODCAST_DESTINATION}/${name}"
+        fi
+done
+
+# 
+cat "$HISTORY" | sort -k1 | uniq -w 40 > "${HISTORY}.new"
+mv "${HISTORY}.new" "$HISTORY"
