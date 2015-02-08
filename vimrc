@@ -10,7 +10,7 @@ let loaded_matchparen=1
 set expandtab
 
 set background=dark
-set noerrorbells visualbell t_vb=
+set noerrorbells t_vb=
 
 " Spelling
 set spelllang=en_au
