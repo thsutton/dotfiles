@@ -27,14 +27,15 @@ cat "$LIST" \
 | xargs -0 shasum \
 | while read sum podcast; do
         name=$(echo "$podcast" | sed -Ee "s#^$PODCAST_SOURCE/##")
-        dir=$(dirname "$name")
+        file_name=$(basename "$name")
+        target_dir=$(dirname "$name" | sed -Ee 's#&# and #g' | sed -Ee 's/[^a-zA-Z0-9_-,]/ /g' | tr -s " ")
         if grep -q $sum "$HISTORY"; then
                 echo "Skipping $name" > /dev/null
         else
                 echo "Copying \"$name\""
                 echo -e "$sum\t$name" >> "$HISTORY"
-                mkdir -p "${PODCAST_DESTINATION}/${dir}"
-                rsync "${PODCAST_SOURCE}/${name}" "${PODCAST_DESTINATION}/${name}"
+                mkdir -p "${PODCAST_DESTINATION}/${target_dir}"
+                rsync "${PODCAST_SOURCE}/${name}" "${PODCAST_DESTINATION}/${target_dir}/${file_name}"
         fi
 done
 
