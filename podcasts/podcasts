@@ -39,6 +39,5 @@ cat "$LIST" \
         fi
 done
 
-# 
 cat "$HISTORY" | sort -k1 | uniq -w 40 > "${HISTORY}.new"
 mv "${HISTORY}.new" "$HISTORY"

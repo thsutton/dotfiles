@@ -11,3 +11,5 @@
 	ui = auto
 [core]
 	quotepath = false
+[fetch]
+	prune = true
