@@ -24,6 +24,7 @@ touch "$HISTORY"
 
 cat "$LIST" \
 | xargs -n 1 -I % find "${PODCAST_SOURCE}/%" -type f -iname '*.mp3' -cmin "+${MIN_AGE}" -print0 \
+| sort -z \
 | xargs -0 shasum \
 | while read sum podcast; do
         name=$(echo "$podcast" | sed -Ee "s#^$PODCAST_SOURCE/##")
