@@ -10,7 +10,7 @@ let loaded_matchparen=1
 set expandtab
 
 set background=dark
-set noerrorbells t_vb=
+set noerrorbells novb
 
 " Spelling
 set spelllang=en_au
@@ -22,8 +22,7 @@ let maplocalleader = g:mapleader
 if has("gui_running")
 	set background=light
 	set guifont=Monospace\ 18
-	set visualbell
-	set t_vb=
+	set novisualbell
 endif
 
 " Key bindings
