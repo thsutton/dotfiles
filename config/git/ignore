@@ -1,0 +1,10 @@
+*.bak
+*.elc
+*~
+.*.swp
+.DS_Store
+._*
+.cabal-sandbox/
+_darcs/
+dist/
+cabal.sandbox.config

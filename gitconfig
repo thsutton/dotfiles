@@ -1,0 +1,15 @@
+[user]
+	name = Thomas Sutton
+	email = me@thomas-sutton.id.au
+[push]
+	default = current
+[color]
+	branch = auto
+	diff = auto
+	interactive = auto
+	status = auto
+	ui = auto
+[core]
+	quotepath = false
+[fetch]
+	prune = true

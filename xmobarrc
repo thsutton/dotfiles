@@ -1,0 +1,40 @@
+Config { font = "-misc-fixed-*-*-*-*-12-*-*-*-*-*-*-*"
+       , borderColor = "black"
+       , border = TopB
+       , bgColor = "black"
+       , fgColor = "grey"
+       , position = Top
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "."
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ Run Weather "YSSY" ["-t","<station>: <tempC>C",
+                                          "-L","18","-H","25",
+                                          "--normal","green",
+                                          "--high","red",
+                                          "--low","lightblue"] 36000
+                    , Run Network "wlp1s0" ["-L","0","-H","32",
+                                          "--normal","green","--high","red"] 10
+                    , Run Cpu ["-L","3","-H","50",
+                               "--normal","green","--high","red"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+    		    , Run Date "%Y-%m-%d %H:%M:%S" "date" 10
+                    , Run BatteryP ["BAT0"]
+                        [ "-t", "<acstatus><left>%"
+                        , "-L", "10", "-H", "80", "-p", "3"
+                        , "--"
+                        , "-O", "<fc=green>Charging</fc>"
+                        , "-i", "Charged"
+                        , "-o", "<fc=yellow>Battery</fc>"
+                        , "-L", "-15", "-H", "-5"
+                        ]
+                        600
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "%cpu% | %memory% | %wlp1s0% }\
+                    \{ <fc=#ee9a00>%date%</fc> | %YSSY% | %battery%"
+       }

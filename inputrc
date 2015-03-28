@@ -1,0 +1,10 @@
+set bell-style visible
+# File completion
+set visible-stats on
+# Key bindings
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+"\e[1;3D": backward-word
+"\e[1;3C": forward-word
+"\e[1;5D": backward-word
+"\e[1;5C": forward-word
