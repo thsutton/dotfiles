@@ -48,6 +48,7 @@ fi
 
 # Extend $PATH
 # [ -d "/usr/local/ghc-head/bin" ] && PATH="/usr/local/ghc-head/bin:$PATH"
+[ -d "/usr/local/ghc-7.8.4/bin" ] && PATH="/usr/local/ghc-7.8.4/bin:$PATH"
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
 
 export PATH
