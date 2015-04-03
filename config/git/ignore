@@ -6,5 +6,6 @@
 ._*
 .cabal-sandbox/
 _darcs/
-dist/
 cabal.sandbox.config
+dist/
+tmp/
