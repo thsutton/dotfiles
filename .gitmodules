@@ -7,6 +7,9 @@
 [submodule "vim/bundle/idris-vim"]
 	path = vim/bundle/idris-vim
 	url = https://github.com/idris-hackers/idris-vim
+[submodule "vim/bundle/nerdcommenter"]
+	path = vim/bundle/nerdcommenter
+	url = https://github.com/scrooloose/nerdcommenter.git
 [submodule "vim/bundle/syntastic"]
 	path = vim/bundle/syntastic
 	url = https://github.com/scrooloose/syntastic
