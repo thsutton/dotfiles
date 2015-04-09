@@ -1,6 +1,4 @@
-set nocompatible
-set modeline
-set number
+set nocompatible set modeline set number
 
 " Appearance
 set background=dark
@@ -10,8 +8,13 @@ set titlestring=%f
 " GUI
 if has("gui_running")
 	set background=light
-	set guifont=Menlo:h18
+	set guifont=Monospace\ 18
 	set mouseshape=n:beam,ve:beam,sd:updown
+endif
+
+if has("gui_macvim")
+	set guifont=Menlo:h18
+	set background=dark
 endif
 
 " Key bindings
