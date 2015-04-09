@@ -10,14 +10,11 @@ if [ -z "$LANG" ]; then
 fi
 
 # Editor
-case "$TERM" in
-    xterm*|rxvt*)
-        EDITOR="gvim --nofork"
-        ;;
-    *)
-        EDITOR=vim
-        ;;
-esac
+if [ -z "$(which gvim)" ]; then
+    EDITOR=vim
+else
+    EDITOR=gvim
+fi
 export EDITOR
 
 shopt -s checkwinsize
