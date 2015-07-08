@@ -3,7 +3,14 @@
 ;;
 (require 'package)
 (add-to-list 'package-archives
-  '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+
+(setq package-archive-priorities
+      '(("melpa-stable" . 20)
+        ("melpa" . 0)))
+
 (package-initialize)
 
 ;;
