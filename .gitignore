@@ -13,3 +13,4 @@ _darcs/
 /config/pulse/cookie
 /config/gtk-2.0/gtkfilechooser.ini
 /.vim/.netrwhist
+/.emacs.d/elpa/
