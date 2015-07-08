@@ -1,4 +1,17 @@
+;;
+;; Package management
+;;
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
 
+(setq package-archive-priorities
+      '(("melpa-stable" . 20)
+        ("melpa" . 0)))
+
+(package-initialize)
 
 ;;
 ;; Add local lisp and info directories
@@ -10,185 +23,147 @@
 
 (add-to-list 'Info-default-directory-list "~/.emacs.d/info/")
 
+;;
+;; Customise UI and UX
+;;
 
-;; Key bindings
-(global-set-key (kbd "C-x a r") 'align-regexp)
+(setq inhibit-startup-buffer-menu t)
+(setq inhibit-startup-message t)
+(setq inhibit-startup-screen t)
+(setq inhibit-splash-screen t)
+(tool-bar-mode -1)
 
+;; Input and encodings
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
+;; line and column numbers
+(global-linum-mode t)
+(setq line-number-mode t)
+(setq column-number-mode t)
+
+;; smooth scrolling
+(when (not (package-installed-p 'smooth-scrolling))
+  (package-refresh-contents)
+  (package-install 'smooth-scrolling))
+(require 'smooth-scrolling)
+
+;; Whitespace
+;
+; Highlight whitespace in inappropriate places.
+(setq whitespace-style '(face trailing lines-tail tabs))
+(global-whitespace-mode 1)
+
 (transient-mark-mode 1)
 
-(put 'upcase-region 'disabled nil)
+;; Key bindings
+(global-set-key (kbd "C-x a r") 'align-regexp)
 
 ;;
 ;; Markdown
 ;;
 
-(autoload 'markdown-mode "markdown-mode"
-  "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist
-	     '("\\.txt" . markdown-mode))
-(add-to-list 'auto-mode-alist
-	     '("\\.md" . markdown-mode))
+(when (not (package-installed-p 'markdown-mode))
+  (package-refresh-contents)
+  (package-install 'markdown-mode))
+(require 'markdown-mode)
+(when (not (package-installed-p 'pandoc-mode))
+  (package-refresh-contents)
+  (package-install 'pandoc-mode))
+(require 'pandoc-mode)
 
-
-; Enable auto-fill mode when editing Markdown.
+(add-hook 'markdown-mode-hook 'pandoc-mode)
 (add-hook 'markdown-mode-hook 'auto-fill-mode)
-
-
-;;
-;; Javascript
-;;
-
-(add-to-list 'auto-mode-alist
-	     '("\\.js\\'" . espresso-mode))
-(autoload 'espresso-mode "espresso" 
-  "Major mode for editing Javascript files" t)
-(setq espresso-mode-hook
-      (function (lambda ()
-		  (setq indent-tabs-mode nil)
-		  (setq espresso-indent-level 2)
-		  )
-		))
-
-
-;;
-;; CSS
-;;
-
-(add-to-list 'auto-mode-alist
-	     '("\\.css\\'" . css-mode))
-(autoload 'css-mode "css-mode"
-  "Major mode for editing CSS files" t)
-
-;;
-;; Ruby
-;;
-
-(autoload 'ruby-mode "ruby-mode"
-  "Major mode for ruby files" t)
-(add-to-list 'auto-mode-alist
-	     '("\\.rb$" . ruby-mode))
-(add-to-list 'interpreter-mode-alist
-	     '("ruby" . ruby-mode))
-
-(autoload 'run-ruby "inf-ruby"
-  "Run an inferior Ruby process.")
-(autoload 'inf-ruby-keys "inf-ruby"
-  "Set local key defs for inf-ruby in ruby-mode")
-(add-hook 'ruby-mode-hook
-          '(lambda ()
-	     (inf-ruby-keys)
-	     ))
+(add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
+(add-to-list 'auto-mode-alist '("\\.txt\\'" . markdown-mode))
 
 ;;
 ;; Haskell
 ;;
 
-(autoload 'haskell-mode "haskell-site-file.el"
-  "Major mode for editing Haskell files" t)
-(autoload 'haskell-cabal-mode "haskell-site-file.el"
-  "Major mode for editing Cabal files" t)
-(add-to-list 'auto-mode-alist
-	     '("\\.hs" . haskell-mode))
-(add-to-list 'auto-mode-alist
-	     '("\\.lhs" . haskell-mode))
-(add-to-list 'auto-mode-alist
-	     '("\\.cabal" . haskell-cabal-mode))
+(when (not (package-installed-p 'haskell-mode))
+  (package-refresh-contents)
+  (package-install 'haskell-mode))
+(when (not (package-installed-p 'ghc))
+  (package-refresh-contents)
+  (package-install 'ghc))
 
+(require 'haskell-interactive-mode)
+(require 'haskell-process)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
-; Enable automatic documentation display
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-; Enable intelligent indentation
+(eval-after-load 'haskell-mode
+  '(define-key haskell-mode-map [f8] 'haskell-navigate-imports))
+
+(eval-after-load 'haskell-mode '(progn
+  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+  (define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
+  (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
+  (define-key haskell-mode-map (kbd "C-c C-n C-i") 'haskell-process-do-info)
+  (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
+  (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)
+  (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)))
+(eval-after-load 'haskell-cabal '(progn
+  (define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
+  (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-ode-clear)
+  (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+  (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
+
+(autoload 'ghc-init "ghc" nil t)
+(autoload 'ghc-debug "ghc" nil t)
+(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-(add-hook 'haskell-cabal-mode-hook
-	  (lambda () (setq indent-tabs-mode nil))
-	  )
+
+(setq haskell-indentation-layout-offset 4)
+(setq haskell-indentation-left-offset 4)
 
 ;;
-;; DVC
+;; Idris
 ;;
 
-(require 'dvc-autoloads)
-
-
-;;
-;; PHP Mode
-;;
-
-(autoload 'php-mode "php-mode-improved.el"
-  "Major mode for editing PHP files" t)
-(add-to-list 'auto-mode-alist
-	     '("\\.php" . php-mode))
-(setq php-mode-hook
-      (function (lambda ()
-		  (setq indent-tabs-mode nil)
-		  (setq php-mode-warn-if-mumamo-off t)
-		  )
-		))
-
-
-;;
-;; Javascript Mode
-;;
-
-(autoload 'js2-mode "js2"
-  "Major mode for editing Javascript" t)
-(add-to-list 'auto-mode-alist
-	     '("\\.js$" . js2-mode))
+(when (not (package-installed-p 'idris-mode))
+  (package-refresh-contents)
+  (package-install 'idris-mode))
 
 ;;
 ;; CSV Mode
 ;;
 
-(autoload 'csv-mode "csv-mode.el"
-  "Major mode for editing CSV files" t)
-(add-to-list 'auto-mode-alist
-    '("\\.csv" . csv-mode))
+(when (not (package-installed-p 'csv-mode))
+  (package-refresh-contents)
+  (package-install 'csv-mode))
+(require 'csv-mode)
 
+;;
+;; Graphviz
+;;
+
+
+(when (not (package-installed-p 'graphviz-dot-mode))
+  (package-refresh-contents)
+  (package-install 'graphviz-dot-mode))
+(require 'graphviz-dot-mode)
 
 ;;
 ;; Puppet
 ;;
 
-(autoload 'puppet-mode "puppet-mode"
-  "Major mode for editing puppet manifests")
-(add-to-list 'auto-mode-alist 
-    '("\\.pp$" . puppet-mode))
-
+(when (not (package-installed-p 'puppet-mode))
+  (package-refresh-contents)
+  (package-install 'puppet-mode))
+(require 'puppet-mode)
 
 ;;
 ;; Nginx
 ;;
 
-(autoload 'nginx-mode "nginx-mode.el"
-  "Major mode for editing nginx configuration files")
-(add-to-list 'auto-mode-alist
-  '("nginx/" . nginx-mode))
 
-
-;;
-;; Octave
-;;
-(autoload 'octave-mode "octave-mod.el" nil t)
-(add-to-list 'auto-mode-alist
-	     '("\\.m$" . octave-mode))
-(add-hook 'octave-mode-hook
-	  (lambda ()
-	    (abbrev-mode 1)
-	    (auto-fill-mode 1)
-	    (font-lock-mode 1)
-	    ))
-(add-hook 'inferior-octave-mode-hook
-	  (lambda ()
-	    (turn-on-font-lock)
-	    (define-key inferior-octave-mode-map [up]
-	      'comint-previous-input)
-	    (define-key inferior-octave-mode-map [down]
-	      'comint-next-input)))
-
+(when (not (package-installed-p 'nginx-mode))
+  (package-refresh-contents)
+  (package-install 'nginx-mode))
+(require 'nginx-mode)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.

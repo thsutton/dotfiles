@@ -13,7 +13,7 @@ fi
 if [ -z "$(which gvim)" ]; then
     EDITOR=vim
 else
-    EDITOR=gvim
+    EDITOR="gvim -f"
 fi
 export EDITOR
 
@@ -43,9 +43,12 @@ if [ -d "$HOME/perl5" ]; then
     export PATH PERL5LIB PERL_LOCAL_LIB_ROOT PERL_MB_OPT PERL_MM_OPT
 fi
 
+[ -d "/usr/local/git-2.4.4/bin" ] && PATH="/usr/local/git-2.4.4/bin:$PATH"
+
 # Extend $PATH
 # [ -d "/usr/local/ghc-head/bin" ] && PATH="/usr/local/ghc-head/bin:$PATH"
 [ -d "/usr/local/ghc-7.8.4/bin" ] && PATH="/usr/local/ghc-7.8.4/bin:$PATH"
+[ -d "$HOME/.smackage/bin" ] && PATH="$HOME/.smackage/bin:$PATH"
 [ -d "$HOME/bin" ] && PATH="$HOME/bin:$PATH"
 
 export PATH
