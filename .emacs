@@ -128,6 +128,14 @@
   (package-install 'idris-mode))
 
 ;;
+;; JonPRL
+;;
+(when (not (package-installed-p 'jonprl-mode))
+  (package-refresh-contents)
+  (package-install 'jonprl-mode))
+(require 'jonprl-mode)
+
+;;
 ;; CSV Mode
 ;;
 
