@@ -1,11 +1,21 @@
-*.bak
-*.elc
-*~
-.*.swp
-.DS_Store
-._*
+# Haskell
+.stack-work/
 .cabal-sandbox/
 _darcs/
 cabal.sandbox.config
 dist/
+
+# Vim
+.*.swp
+
+# Emacs
+.#*
+\#*#
+*.elc
+*~
+
+# Misc
 tmp/
+*.bak
+.DS_Store
+._*

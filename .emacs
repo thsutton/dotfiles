@@ -60,6 +60,11 @@
 ;; Key bindings
 (global-set-key (kbd "C-x a r") 'align-regexp)
 
+(when (not (package-installed-p 'pretty-mode))
+  (package-refresh-contents)
+  (package-install 'pretty-mode))
+(require 'pretty-mode)
+
 ;;
 ;; Markdown
 ;;
