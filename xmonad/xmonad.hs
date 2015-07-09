@@ -13,6 +13,6 @@ toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
 myConfig = defaultConfig
     { terminal = "urxvt"
-  --, modMask = mod4Mask
+    , modMask = mod4Mask
     }
 

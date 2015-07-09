@@ -1,4 +1,23 @@
 set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tpope/vim-sensible'
+Plugin 'Shougo/vimproc'
+Plugin 'tpope/vim-fugitive'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'kien/ctrlp'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/syntastic'
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
+call vundle#end()
+
+filetype plugin indent on
+
 set modeline
 set number
 
@@ -32,9 +51,6 @@ set wildignore+=*.swp,*~,*/tmp/*,*/dist/*,*.so,*.o,*.lo,*.a
 
 set nowrap
 
-filetype on
-filetype plugin on
-filetype plugin indent on
 syntax on
 
 let loaded_matchparen=1
