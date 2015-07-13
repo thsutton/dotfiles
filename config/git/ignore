@@ -1,21 +1,19 @@
+# Editors
+*.bak
+*.elc
+*~
+\#*#
+.#*
+.*.swp
+
 # Haskell
-.stack-work/
 .cabal-sandbox/
-_darcs/
+.stack-work/
 cabal.sandbox.config
 dist/
 
-# Vim
-.*.swp
-
-# Emacs
-.#*
-\#*#
-*.elc
-*~
-
 # Misc
 tmp/
-*.bak
+_darcs/
 .DS_Store
 ._*
