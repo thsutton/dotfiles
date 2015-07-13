@@ -23,10 +23,18 @@
 
 (add-to-list 'Info-default-directory-list "~/.emacs.d/info/")
 
+(setenv "PATH"
+  (concat "/usr/local/ghc-7.8.4/bin:" (getenv "PATH")))
+
+(setq exec-path
+  (append '("/usr/local/ghc-7.8.4/bin") exec-path))
+
+
 ;;
 ;; Customise UI and UX
 ;;
 
+(setq indent-tabs-mode nil)
 (setq inhibit-startup-buffer-menu t)
 (setq inhibit-startup-message t)
 (setq inhibit-startup-screen t)
@@ -94,39 +102,51 @@
   (package-refresh-contents)
   (package-install 'ghc))
 
+(require 'haskell-mode)
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
 
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
 
-(custom-set-variables
- '(haskell-stylish-on-save t)
+(define-key haskell-mode-map (kbd "C-,") 'haskell-move-nested-left)
+(define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)
 
- '(haskell-process-suggest-remove-import-lines t)
- '(haskell-process-auto-import-loaded-modules t)
- '(haskell-process-log t))
-
-(define-key haskell-mode-map [f8] 'haskell-navigate-imports)
-
-(eval-after-load "haskell-mode"
-  '(progn
-     (define-key haskell-mode-map (kbd "C-,") 'haskell-move-nested-left)
-     (define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)))
+(define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
 
 (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
-(define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
 (define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
 (define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
 (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
 (define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
-(define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
+;;(define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
 (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+
 (define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
 (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
 (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
 (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)
+
+(add-hook 'align-load-hook
+  (lambda ()
+    (add-to-list 'align-rules-list
+                 '(haskell-types
+                   (regexp . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
+                   (modes quote (haskell-mode literate-haskell-mode))))
+    (add-to-list 'align-rules-list
+                 '(haskell-assignment
+                   (regexp . "\\(\\s-+\\)=\\s-+")
+                   (modes quote (haskell-mode literate-haskell-mode))))
+    (add-to-list 'align-rules-list
+                 '(haskell-arrows
+                   (regexp . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
+                   (modes quote (haskell-mode literate-haskell-mode))))
+    (add-to-list 'align-rules-list
+                 '(haskell-left-arrows
+                   (regexp . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")
+                   (modes quote (haskell-mode literate-haskell-mode))))
+    ))
 
 ;;
 ;; Idris
@@ -139,10 +159,12 @@
 ;;
 ;; JonPRL
 ;;
+
 (when (not (package-installed-p 'jonprl-mode))
   (package-refresh-contents)
   (package-install 'jonprl-mode))
 (require 'jonprl-mode)
+
 (pretty-add-keywords
   'jonprl-mode
   '(("\\\[" . "⸤")
@@ -166,7 +188,6 @@
 ;; Graphviz
 ;;
 
-
 (when (not (package-installed-p 'graphviz-dot-mode))
   (package-refresh-contents)
   (package-install 'graphviz-dot-mode))
@@ -185,21 +206,30 @@
 ;; Nginx
 ;;
 
-
 (when (not (package-installed-p 'nginx-mode))
   (package-refresh-contents)
   (package-install 'nginx-mode))
 (require 'nginx-mode)
 
+
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(haskell-process-auto-import-loaded-modules t)
+ '(haskell-process-log t)
+ '(haskell-process-suggest-hoogle-imports t)
+ '(haskell-process-suggest-remove-import-lines t)
+ '(haskell-process-type (quote stack-ghci))
+ '(haskell-process-use-presentation-mode t)
+ '(haskell-stylish-on-save t)
+ '(haskell-tags-on-save t)
  '(require-final-newline t))
+
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "White" :foreground "Black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "apple" :family "Monaco")))))
