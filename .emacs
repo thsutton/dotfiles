@@ -96,33 +96,37 @@
 
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
+
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+(add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
 
-(eval-after-load 'haskell-mode
-  '(define-key haskell-mode-map [f8] 'haskell-navigate-imports))
+(custom-set-variables
+ '(haskell-stylish-on-save t)
 
-(eval-after-load 'haskell-mode '(progn
-  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
-  (define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
-  (define-key haskell-mode-map (kbd "C-c C-n C-t") 'haskell-process-do-type)
-  (define-key haskell-mode-map (kbd "C-c C-n C-i") 'haskell-process-do-info)
-  (define-key haskell-mode-map (kbd "C-c C-n C-c") 'haskell-process-cabal-build)
-  (define-key haskell-mode-map (kbd "C-c C-n c") 'haskell-process-cabal)
-  (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)))
-(eval-after-load 'haskell-cabal '(progn
-  (define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
-  (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-ode-clear)
-  (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
-  (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)))
+ '(haskell-process-suggest-remove-import-lines t)
+ '(haskell-process-auto-import-loaded-modules t)
+ '(haskell-process-log t))
 
-(autoload 'ghc-init "ghc" nil t)
-(autoload 'ghc-debug "ghc" nil t)
-(add-hook 'haskell-mode-hook (lambda () (ghc-init)))
+(define-key haskell-mode-map [f8] 'haskell-navigate-imports)
 
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(eval-after-load "haskell-mode"
+  '(progn
+     (define-key haskell-mode-map (kbd "C-,") 'haskell-move-nested-left)
+     (define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)))
 
-(setq haskell-indentation-layout-offset 4)
-(setq haskell-indentation-left-offset 4)
+(define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+(define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
+(define-key haskell-mode-map (kbd "C-c C-t") 'haskell-process-do-type)
+(define-key haskell-mode-map (kbd "C-c C-i") 'haskell-process-do-info)
+(define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+(define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+(define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
+(define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
+(define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
+(define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
+(define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+(define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)
 
 ;;
 ;; Idris
@@ -139,6 +143,15 @@
   (package-refresh-contents)
   (package-install 'jonprl-mode))
 (require 'jonprl-mode)
+(pretty-add-keywords
+  'jonprl-mode
+  '(("\\\[" . "⸤")
+    ("\\\]" . "⸥")
+    ("<" . "⟨")
+    (">" . "⟩")
+    ("<>" . "⬧")
+    ("\\<\\(=def=\\)\\>" . "≝")
+    ))
 
 ;;
 ;; CSV Mode
