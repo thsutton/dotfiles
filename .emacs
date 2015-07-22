@@ -81,6 +81,7 @@
   (package-refresh-contents)
   (package-install 'markdown-mode))
 (require 'markdown-mode)
+
 (when (not (package-installed-p 'pandoc-mode))
   (package-refresh-contents)
   (package-install 'pandoc-mode))
@@ -211,6 +212,14 @@
   (package-install 'nginx-mode))
 (require 'nginx-mode)
 
+;;
+;; YAML
+;;
+
+(when (not (package-installed-p 'yaml-mode))
+  (package-refresh-contents)
+  (package-install 'yaml-mode))
+(require 'yaml-mode)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
