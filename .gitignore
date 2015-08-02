@@ -14,3 +14,4 @@ _darcs/
 /config/gtk-2.0/gtkfilechooser.ini
 /.vim/.netrwhist
 /.emacs.d/elpa/
+/.emacs.d/session.*
