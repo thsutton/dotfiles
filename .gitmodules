@@ -28,3 +28,12 @@
 [submodule "vim/bundle/haskell-cabal"]
 	path = vim/bundle/haskell-cabal
 	url = https://github.com/Twinside/vim-syntax-haskell-cabal.git
+[submodule "vim/bundle/Vundle.vim"]
+    path = vim/bundle/Vundle.vim
+	url = https://github.com/gmarik/Vundle
+[submodule "vim/bundle/vimproc"]
+    path = vim/bundle/vimproc
+    url = https://github.com/Shougo/vimproc
+[submodule "vim/bundle/vim-fugitive"]
+    path = vim/bundle/vim-fugitive
+    url = https://github.com/tpope/vim-fugitive
