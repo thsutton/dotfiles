@@ -17,3 +17,4 @@ tmp/
 _darcs/
 .DS_Store
 ._*
+*.egg-info

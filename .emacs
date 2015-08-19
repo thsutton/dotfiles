@@ -87,6 +87,7 @@
   (package-install 'pandoc-mode))
 (require 'pandoc-mode)
 
+(add-hook 'markdown-mode-hook 'flyspell-mode)
 (add-hook 'markdown-mode-hook 'pandoc-mode)
 (add-hook 'markdown-mode-hook 'auto-fill-mode)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
@@ -220,6 +221,22 @@
   (package-refresh-contents)
   (package-install 'yaml-mode))
 (require 'yaml-mode)
+
+;;
+;; Python
+;;
+
+(add-hook 'python-mode-hook
+  (lambda ()
+    (setq tab-width 4)))
+
+;;
+;; Ruby
+;;
+
+(add-hook 'ruby-mode-hook
+  (lambda ()
+    (setq tab-width 4)))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
