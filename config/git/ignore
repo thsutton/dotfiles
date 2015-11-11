@@ -18,3 +18,4 @@ _darcs/
 .DS_Store
 ._*
 *.egg-info
+.vagrant
