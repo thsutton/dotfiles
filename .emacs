@@ -3,13 +3,10 @@
 ;;
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
-
-(setq package-archive-priorities
-      '(("melpa-stable" . 20)
-        ("melpa" . 0)))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 
 (package-initialize)
 
@@ -152,12 +149,24 @@ re-downloaded in order to locate PACKAGE."
 
 (require-package 'scala-mode2)
 (require-package 'sbt-mode)
+;(require-package 'ensime)
+;(require 'ensime)
+;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+(add-hook 'scala-mode-hook #'yas-minor-mode)
+; but company-mode / yasnippet conflict.
+;(define-key company-active-map [tab] nil)
 
 ;;
 ;; Idris
 ;;
 
 (require-package 'idris-mode)
+
+;;
+;; SML
+;;
+
+(require-package 'sml-mode)
 
 ;;
 ;; JonPRL
@@ -235,6 +244,7 @@ re-downloaded in order to locate PACKAGE."
  '(haskell-process-use-presentation-mode t)
  '(haskell-stylish-on-save t)
  '(haskell-tags-on-save t)
+ '(ispell-program-name "/usr/local/bin/ispell")
  '(require-final-newline t))
 
 (custom-set-faces
