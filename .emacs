@@ -156,6 +156,8 @@ re-downloaded in order to locate PACKAGE."
 ; but company-mode / yasnippet conflict.
 ;(define-key company-active-map [tab] nil)
 
+(require-package 'thrift)
+
 ;;
 ;; Idris
 ;;
