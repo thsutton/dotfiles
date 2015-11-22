@@ -16,3 +16,6 @@ _darcs/
 /vim/bundle/
 /.emacs.d/elpa/
 /.emacs.d/session.*
+
+# Do not commit
+dnc-*
