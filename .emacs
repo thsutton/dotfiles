@@ -3,15 +3,24 @@
 ;;
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
-(add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
-
-(setq package-archive-priorities
-      '(("melpa-stable" . 20)
-        ("melpa" . 0)))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
 
 (package-initialize)
+
+(defun require-package (package &optional min-version no-refresh)
+  "Install given PACKAGE, optionally requiring MIN-VERSION.
+If NO-REFRESH is non-nil, the available package lists will not be
+re-downloaded in order to locate PACKAGE."
+  (if (package-installed-p package min-version)
+      t
+    (if (or (assoc package package-archive-contents) no-refresh)
+        (package-install package)
+      (progn
+        (package-refresh-contents)
+        (require-package package min-version t)))))
 
 ;;
 ;; Add local lisp and info directories
@@ -52,10 +61,9 @@
 (setq column-number-mode t)
 
 ;; smooth scrolling
-(when (not (package-installed-p 'smooth-scrolling))
-  (package-refresh-contents)
-  (package-install 'smooth-scrolling))
+(require-package 'smooth-scrolling)
 (require 'smooth-scrolling)
+
 
 ;; Whitespace
 ;
@@ -68,24 +76,15 @@
 ;; Key bindings
 (global-set-key (kbd "C-x a r") 'align-regexp)
 
-(when (not (package-installed-p 'pretty-mode))
-  (package-refresh-contents)
-  (package-install 'pretty-mode))
+(require-package 'pretty-mode)
 (require 'pretty-mode)
 
 ;;
 ;; Markdown
 ;;
 
-(when (not (package-installed-p 'markdown-mode))
-  (package-refresh-contents)
-  (package-install 'markdown-mode))
-(require 'markdown-mode)
-
-(when (not (package-installed-p 'pandoc-mode))
-  (package-refresh-contents)
-  (package-install 'pandoc-mode))
-(require 'pandoc-mode)
+(require-package 'markdown-mode)
+(require-package 'pandoc-mode)
 
 (add-hook 'markdown-mode-hook 'flyspell-mode)
 (add-hook 'markdown-mode-hook 'pandoc-mode)
@@ -97,14 +96,8 @@
 ;; Haskell
 ;;
 
-(when (not (package-installed-p 'haskell-mode))
-  (package-refresh-contents)
-  (package-install 'haskell-mode))
-(when (not (package-installed-p 'ghc))
-  (package-refresh-contents)
-  (package-install 'ghc))
-
-(require 'haskell-mode)
+(require-package 'haskell-mode)
+(require-package 'ghc)
 (require 'haskell-interactive-mode)
 (require 'haskell-process)
 
@@ -151,20 +144,37 @@
     ))
 
 ;;
+;; Scala
+;;
+
+(require-package 'scala-mode2)
+(require-package 'sbt-mode)
+;(require-package 'ensime)
+;(require 'ensime)
+;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+(add-hook 'scala-mode-hook #'yas-minor-mode)
+; but company-mode / yasnippet conflict.
+;(define-key company-active-map [tab] nil)
+
+(require-package 'thrift)
+
+;;
 ;; Idris
 ;;
 
-(when (not (package-installed-p 'idris-mode))
-  (package-refresh-contents)
-  (package-install 'idris-mode))
+(require-package 'idris-mode)
+
+;;
+;; SML
+;;
+
+(require-package 'sml-mode)
 
 ;;
 ;; JonPRL
 ;;
 
-(when (not (package-installed-p 'jonprl-mode))
-  (package-refresh-contents)
-  (package-install 'jonprl-mode))
+(require-package 'jonprl-mode)
 (require 'jonprl-mode)
 
 (pretty-add-keywords
@@ -181,46 +191,31 @@
 ;; CSV Mode
 ;;
 
-(when (not (package-installed-p 'csv-mode))
-  (package-refresh-contents)
-  (package-install 'csv-mode))
-(require 'csv-mode)
+(require-package 'csv-mode)
 
 ;;
 ;; Graphviz
 ;;
 
-(when (not (package-installed-p 'graphviz-dot-mode))
-  (package-refresh-contents)
-  (package-install 'graphviz-dot-mode))
-(require 'graphviz-dot-mode)
+(require-package 'graphviz-dot-mode)
 
 ;;
 ;; Puppet
 ;;
 
-(when (not (package-installed-p 'puppet-mode))
-  (package-refresh-contents)
-  (package-install 'puppet-mode))
-(require 'puppet-mode)
+(require-package 'puppet-mode)
 
 ;;
 ;; Nginx
 ;;
 
-(when (not (package-installed-p 'nginx-mode))
-  (package-refresh-contents)
-  (package-install 'nginx-mode))
-(require 'nginx-mode)
+(require-package 'nginx-mode)
 
 ;;
 ;; YAML
 ;;
 
-(when (not (package-installed-p 'yaml-mode))
-  (package-refresh-contents)
-  (package-install 'yaml-mode))
-(require 'yaml-mode)
+(require-package 'yaml-mode)
 
 ;;
 ;; Python
@@ -251,6 +246,7 @@
  '(haskell-process-use-presentation-mode t)
  '(haskell-stylish-on-save t)
  '(haskell-tags-on-save t)
+ '(ispell-program-name "/usr/local/bin/ispell")
  '(require-final-newline t))
 
 (custom-set-faces
