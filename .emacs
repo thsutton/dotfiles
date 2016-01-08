@@ -43,6 +43,9 @@ re-downloaded in order to locate PACKAGE."
 ;; Customise UI and UX
 ;;
 
+(setq initial-scratch-message "")
+(setq initial-major-mode 'text-mode)
+
 (setq indent-tabs-mode nil)
 (setq inhibit-startup-buffer-menu t)
 (setq inhibit-startup-message t)
@@ -238,6 +241,7 @@ re-downloaded in order to locate PACKAGE."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(flyspell-default-dictionary "en_AU")
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-hoogle-imports t)
@@ -246,7 +250,8 @@ re-downloaded in order to locate PACKAGE."
  '(haskell-process-use-presentation-mode t)
  '(haskell-stylish-on-save t)
  '(haskell-tags-on-save t)
- '(ispell-program-name "/usr/local/bin/ispell")
+ '(ispell-highlight-face (quote flyspell-incorrect))
+ '(ispell-program-name "/usr/local/bin/hunspell")
  '(require-final-newline t))
 
 (custom-set-faces
