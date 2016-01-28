@@ -3,7 +3,7 @@
 ;;
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa" . "https://melpa.org/packages/") t)
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/")))
@@ -229,6 +229,12 @@ re-downloaded in order to locate PACKAGE."
     (setq tab-width 4)))
 
 ;;
+;; Lua
+;;
+
+(require-package 'lua-mode)
+
+;;
 ;; Ruby
 ;;
 
@@ -241,6 +247,7 @@ re-downloaded in order to locate PACKAGE."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(agda2-include-dirs (quote ("." "/usr/local/lib/agda/src")))
  '(flyspell-default-dictionary "en_AU")
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
@@ -252,7 +259,8 @@ re-downloaded in order to locate PACKAGE."
  '(haskell-tags-on-save t)
  '(ispell-highlight-face (quote flyspell-incorrect))
  '(ispell-program-name "/usr/local/bin/hunspell")
- '(require-final-newline t))
+ '(require-final-newline t)
+ '(sql-product (quote postgres)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -260,3 +268,6 @@ re-downloaded in order to locate PACKAGE."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "White" :foreground "Black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "apple" :family "Monaco")))))
+
+(load-file (let ((coding-system-for-read 'utf-8))
+                (shell-command-to-string "agda-mode locate")))
