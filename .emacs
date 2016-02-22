@@ -38,7 +38,6 @@ re-downloaded in order to locate PACKAGE."
 (setq exec-path
   (append '("/usr/local/ghc-7.8.4/bin") exec-path))
 
-
 ;;
 ;; Customise UI and UX
 ;;
@@ -107,6 +106,7 @@ re-downloaded in order to locate PACKAGE."
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
+(add-hook 'haskell-mode-hook 'flyspell-mode)
 
 (define-key haskell-mode-map (kbd "C-,") 'haskell-move-nested-left)
 (define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)
@@ -191,6 +191,14 @@ re-downloaded in order to locate PACKAGE."
     ))
 
 ;;
+;; Twelf support
+;;
+(if (file-exists-p "~/Applications/Twelf")
+    (progn
+      (setq twelf-root "~/Applications/Twelf/")
+      (load (concat twelf-root "emacs/twelf-init.el"))))
+
+;;
 ;; CSV Mode
 ;;
 
@@ -249,6 +257,8 @@ re-downloaded in order to locate PACKAGE."
  ;; If there is more than one, they won't work right.
  '(agda2-include-dirs (quote ("." "/usr/local/lib/agda/src")))
  '(flyspell-default-dictionary "en_AU")
+ '(haskell-font-lock-symbols t)
+ '(haskell-indent-spaces 4)
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-hoogle-imports t)
