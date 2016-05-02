@@ -104,7 +104,6 @@ re-downloaded in order to locate PACKAGE."
 (require 'haskell-process)
 
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
 (add-hook 'haskell-mode-hook 'flyspell-mode)
 
@@ -119,7 +118,6 @@ re-downloaded in order to locate PACKAGE."
 (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
 (define-key haskell-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
 ;;(define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
-(define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
 
 (define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
 (define-key haskell-cabal-mode-map (kbd "C-c C-k") 'haskell-interactive-mode-clear)
@@ -259,6 +257,9 @@ re-downloaded in order to locate PACKAGE."
  '(flyspell-default-dictionary "en_AU")
  '(haskell-font-lock-symbols t)
  '(haskell-indent-spaces 4)
+ '(haskell-mode-hook
+   (quote
+    (flyspell-prog-mode flyspell-mode haskell-auto-insert-module-template interactive-haskell-mode)))
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-hoogle-imports t)
