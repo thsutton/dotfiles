@@ -2,19 +2,19 @@ set nocompatible
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle
-call vundle#begin()
 
-Plugin 'Shougo/vimproc'
-Plugin 'gmarik/Vundle'
-Plugin 'kien/ctrlp.vim'
-Plugin 'majutsushi/tagbar'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/syntastic'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-sensible'
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax'
-call vundle#end()
+"call vundle#begin()
+"Plugin 'Shougo/vimproc'
+"Plugin 'gmarik/Vundle'
+"Plugin 'kien/ctrlp.vim'
+"Plugin 'majutsushi/tagbar'
+"Plugin 'scrooloose/nerdcommenter'
+"Plugin 'scrooloose/syntastic'
+"Plugin 'tpope/vim-fugitive'
+"Plugin 'tpope/vim-sensible'
+"Plugin 'vim-pandoc/vim-pandoc'
+"Plugin 'vim-pandoc/vim-pandoc-syntax'
+"call vundle#end()
 
 filetype plugin indent on
 
