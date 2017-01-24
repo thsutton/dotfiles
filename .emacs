@@ -32,6 +32,9 @@ re-downloaded in order to locate PACKAGE."
 
 (add-to-list 'Info-default-directory-list "~/.emacs.d/info/")
 
+(setenv "DICPATH"
+  (concat (getenv "HOME") "/Library/Spelling"))
+
 (setenv "PATH"
   (concat "/usr/local/ghc-7.8.4/bin:" (getenv "PATH")))
 
@@ -254,7 +257,6 @@ re-downloaded in order to locate PACKAGE."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(agda2-include-dirs (quote ("." "/usr/local/lib/agda/src")))
- '(flyspell-default-dictionary "en_AU")
  '(haskell-font-lock-symbols t)
  '(haskell-indent-spaces 4)
  '(haskell-mode-hook
