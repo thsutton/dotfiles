@@ -91,11 +91,21 @@ re-downloaded in order to locate PACKAGE."
 (require-package 'markdown-mode)
 (require-package 'pandoc-mode)
 
-(add-hook 'markdown-mode-hook 'flyspell-mode)
-(add-hook 'markdown-mode-hook 'pandoc-mode)
-(add-hook 'markdown-mode-hook 'auto-fill-mode)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-mode))
 (add-to-list 'auto-mode-alist '("\\.txt\\'" . markdown-mode))
+(add-hook 'markdown-mode-hook
+    (lambda ()
+      ;; fix markdown-mode so it allows link labels to wrap:
+      (remove-hook 'fill-nobreak-predicate 'markdown-inside-link-text-p t)
+      (pandoc-mode)
+      (flyspell-mode)
+      (auto-fill-mode)))
+
+;;
+;; Spelling
+;;
+
+(require 'rw-hunspell)
 
 ;;
 ;; Haskell
@@ -271,7 +281,7 @@ re-downloaded in order to locate PACKAGE."
  '(haskell-stylish-on-save t)
  '(haskell-tags-on-save t)
  '(ispell-highlight-face (quote flyspell-incorrect))
- '(ispell-program-name "/usr/local/bin/hunspell")
+ '(ispell-program-name "hunspell")
  '(require-final-newline t)
  '(sql-product (quote postgres)))
 
