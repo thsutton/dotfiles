@@ -16,6 +16,7 @@ _darcs/
 /vim/bundle/
 /.emacs.d/elpa/
 /.emacs.d/session.*
+/.emacs.d/site-lisp/twelf
 
 # Do not commit
 dnc-*

@@ -118,7 +118,6 @@ re-downloaded in order to locate PACKAGE."
 
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
-(add-hook 'haskell-mode-hook 'flyspell-mode)
 
 (define-key haskell-mode-map (kbd "C-,") 'haskell-move-nested-left)
 (define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)
@@ -210,6 +209,11 @@ re-downloaded in order to locate PACKAGE."
       (load (concat twelf-root "emacs/twelf-init.el"))))
 
 ;;
+;; Io support
+;;
+(require 'io-mode)
+
+;;
 ;; CSV Mode
 ;;
 
@@ -269,9 +273,6 @@ re-downloaded in order to locate PACKAGE."
  '(agda2-include-dirs (quote ("." "/usr/local/lib/agda/src")))
  '(haskell-font-lock-symbols t)
  '(haskell-indent-spaces 4)
- '(haskell-mode-hook
-   (quote
-    (flyspell-prog-mode flyspell-mode haskell-auto-insert-module-template interactive-haskell-mode)))
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
  '(haskell-process-suggest-hoogle-imports t)
