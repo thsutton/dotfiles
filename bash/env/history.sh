@@ -1,0 +1,5 @@
+shopt -s histappend
+HISTCONTROL=ignoreboth
+HISTFILESIZE=2000
+HISTSIZE=1000
+HISTTIMEFORMAT='%F %T'

@@ -1,8 +1,0 @@
-set bell-style visible
-# File completion
-set visible-stats on
-# Key bindings
-"\e[A": history-search-backward
-"\e[B": history-search-forward
-"\e[C": forward-char
-"\e[D": backward-char
