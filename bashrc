@@ -4,17 +4,16 @@
 [ -f "$HOME/.bash_aliases" ] && source "$HOME/.bash_aliases"
 
 # Include library functions
-for file in $HOME/.bash/lib/*.sh; do
-    [ -x "$file" ] && source "$file"
+for file in $(find $HOME/.bash/lib -type f -name '*.sh' -perm +111); do
+    source "$file"
 done
 
 # Include my environment
-for file in $HOME/.bash/env/*.sh; do
-    [ -x "$file" ] && source "$file"
+for file in $(find $HOME/.bash/env -type f -name '*.sh' -perm +111); do
+    source "$file"
 done
 
 # Include my completions
-for file in $HOME/.bash/completion/*.sh; do
-    [ -x "$file" ] && source "$file"
+for file in $(find $HOME/.bash/completion -type f -name '*.sh' -perm +111); do
+    source "$file"
 done
-

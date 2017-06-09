@@ -160,12 +160,12 @@ re-downloaded in order to locate PACKAGE."
 ;; Scala
 ;;
 
-(require-package 'scala-mode2)
-(require-package 'sbt-mode)
+;(require-package 'scala-mode2)
+;(require-package 'sbt-mode)
 ;(require-package 'ensime)
 ;(require 'ensime)
 ;(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-(add-hook 'scala-mode-hook #'yas-minor-mode)
+;(add-hook 'scala-mode-hook #'yas-minor-mode)
 ; but company-mode / yasnippet conflict.
 ;(define-key company-active-map [tab] nil)
 
@@ -283,6 +283,9 @@ re-downloaded in order to locate PACKAGE."
  '(haskell-tags-on-save t)
  '(ispell-highlight-face (quote flyspell-incorrect))
  '(ispell-program-name "hunspell")
+ '(package-selected-packages
+   (quote
+    (ensime yaml-mode thrift smooth-scrolling sml-mode puppet-mode pretty-mode pandoc-mode nginx-mode markdown-mode lua-mode jonprl-mode idris-mode graphviz-dot-mode ghc csv-mode)))
  '(require-final-newline t)
  '(sql-product (quote postgres)))
 
@@ -293,6 +296,6 @@ re-downloaded in order to locate PACKAGE."
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "White" :foreground "Black" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 160 :width normal :foundry "apple" :family "Monaco")))))
 
-(load-file (let ((coding-system-for-read 'utf-8))
-                (shell-command-to-string "agda-mode locate")))
+;(load-file (let ((coding-system-for-read 'utf-8))
+;                (shell-command-to-string "agda-mode locate")))
 (put 'upcase-region 'disabled nil)

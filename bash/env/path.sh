@@ -7,6 +7,7 @@ pathmunge "/usr/local/bin" "move"
 pathmunge "$HOME/Library/Haskell/bin" "move"
 pathmunge "$HOME/Library/bin"
 pathmunge "$HOME/Library/bin"
+pathmunge "$HOME/.local/bin"
 pathmunge "$HOME/bin"
 
 export PATH
