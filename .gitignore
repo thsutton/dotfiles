@@ -21,4 +21,4 @@ _darcs/
 
 # Do not commit
 dnc-*
-config/configstore/update-notifier-npm.json
+/config/configstore/update-notifier-*
