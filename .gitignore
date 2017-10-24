@@ -12,6 +12,7 @@ _darcs/
 /config/pulse/*.tdb
 /config/pulse/cookie
 /config/gtk-2.0/gtkfilechooser.ini
+/config/configstore/*-usage.json
 /vim/.netrwhist
 /vim/bundle/
 /emacs.d/elpa/
