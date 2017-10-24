@@ -1,0 +1,2 @@
+# Make SBT not completely useless
+-mem 4096
