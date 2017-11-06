@@ -12,6 +12,9 @@
 cabal.sandbox.config
 dist/
 
+# JVM
+target/
+
 # Misc
 .idea/
 tmp/
