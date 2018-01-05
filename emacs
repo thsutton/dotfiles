@@ -285,7 +285,7 @@ re-downloaded in order to locate PACKAGE."
  '(ispell-program-name "hunspell")
  '(package-selected-packages
    (quote
-    (ensime yaml-mode thrift smooth-scrolling sml-mode puppet-mode pretty-mode pandoc-mode nginx-mode markdown-mode lua-mode jonprl-mode idris-mode graphviz-dot-mode ghc csv-mode)))
+    (go-autocomplete go-mode terraform-mode ensime yaml-mode thrift smooth-scrolling sml-mode puppet-mode pretty-mode pandoc-mode nginx-mode markdown-mode lua-mode jonprl-mode idris-mode graphviz-dot-mode ghc csv-mode)))
  '(require-final-newline t)
  '(sql-product (quote postgres)))
 
