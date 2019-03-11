@@ -5,6 +5,7 @@
 \#*#
 .#*
 .*.swp
+.vscode/
 
 # Haskell
 .cabal-sandbox/
@@ -15,6 +16,9 @@ dist/
 # JVM
 target/
 
+# Python
+*.pyc
+
 # Misc
 .idea/
 tmp/
@@ -23,3 +27,4 @@ _darcs/
 ._*
 *.egg-info
 .vagrant
+*.iml
