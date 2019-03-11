@@ -27,4 +27,10 @@ _darcs/
 ._*
 *.egg-info
 .vagrant
+
 *.iml
+
+# C/C++
+*.o
+*.a
+auto*.cache/
