@@ -1,3 +1,5 @@
+*.keytab
+
 # Editors
 *.bak
 *.elc
@@ -15,6 +17,7 @@ dist/
 
 # JVM
 target/
+out/
 
 # Python
 *.pyc
