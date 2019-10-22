@@ -1,4 +1,37 @@
+set autoindent
+set autowrite
+set background=dark
+set backspace=indent,eol,start
+set complete+=kspell
+set expandtab
+set hidden
+set ignorecase
+set incsearch
+set modeline
+set nocindent
 set nocompatible
+set noerrorbells
+set novisualbell
+set nowrap
+set number
+set printoptions=number:y
+set ruler
+set shiftwidth=4
+set showcmd
+set showmatch
+set smartcase
+set smartindent
+set softtabstop=4
+set spelllang=en_au
+set t_vb=
+set tabstop=4
+set tags=./tags;
+set titlestring=%f
+set wildignore+=*.swp,*~,*/tmp/*,*/dist/*,*.so,*.o,*.lo,*.a
+set wildmenu
+set wildmode=longest,list,full
+set wrapmargin=2
+
 filetype off
 
 set rtp+=~/.vim/bundle/Vundle
@@ -18,14 +51,6 @@ set rtp+=~/.vim/bundle/Vundle
 
 filetype plugin indent on
 
-set modeline
-set number
-
-" Appearance
-set background=dark
-set noerrorbells novisualbell t_vb=
-set titlestring=%f
-
 " GUI
 if has("gui_running")
 	set background=light
@@ -41,34 +66,15 @@ if has("gui_macvim")
 endif
 
 " Key bindings
-nmap <F8> :TagbarToggle<CR>
-let mapleader=","
-let maplocalleader = g:mapleader
+"nmap <F8> :TagbarToggle<CR>
+"let mapleader=","
+"let maplocalleader = g:mapleader
 
 " Globbing
-set wildmode=longest,list
-set wildignore+=*.swp,*~,*/tmp/*,*/dist/*,*.so,*.o,*.lo,*.a
-
-set nowrap
 
 syntax on
 
 let loaded_matchparen=1
-
-" Spelling
-set spelllang=en_au
-set complete+=kspell
-
-" Indentation
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set expandtab
-set autoindent
-set smartindent
-set nocindent
-
-set tags=./tags;
 
 " C
 au FileType c       map ff :%!indent -linux<CR>
@@ -76,7 +82,6 @@ au FileType c       map ff :%!indent -linux<CR>
 " Haskell
 au FileType haskell setlocal iskeyword=a-z,A-Z,_,.,39
 au FileType haskell map ff :%!stylish-haskell<CR>
-
 
 "let g:tagbar_type_haskell = {
     "\ 'ctagsbin'  : 'hothasktags',

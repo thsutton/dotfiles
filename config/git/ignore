@@ -1,5 +1,7 @@
 *.keytab
 
+a.out
+
 # Editors
 *.bak
 *.elc
