@@ -32,7 +32,7 @@ pathmunge () {
                 PATH="$1:$PATH"
             fi
         elif [ "$2" = "move" -o "$3" = "move" ]; then
-            PATH=`pathdelete "$PATH" "$1"`
+            PATH=$(pathdelete "$PATH" "$1")
             if [ "$2" = "after" -o "$3" = "after" ]; then
                 PATH="$PATH:$1"
             else
