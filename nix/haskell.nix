@@ -7,6 +7,7 @@ let
   # NOTE: in `all-packages.nix`:
   # cabal-install = haskell.lib.justStaticExecutables haskellPackages.cabal-install;
   # hlint = haskell.lib.justStaticExecutables haskellPackages.hlint;
+  input-ghc-heap-view = haskellPackages.ghc-heap-view;
   input-cabal-install = haskellPackages.cabal-install;
   input-hlint = haskellPackages.hlint;
   input-hindent = pkgs.haskell.lib.justStaticExecutables haskellPackages.hindent;
@@ -21,7 +22,7 @@ in
       pkgs.jq
       pkgs.shellcheck
       pkgs.figlet
-  
+      input-ghc-heap-view
       input-ghc
       input-cabal-install
       input-hlint
