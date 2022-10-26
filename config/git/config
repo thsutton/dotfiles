@@ -2,7 +2,7 @@
 	name = Thomas Sutton
 	email = me@thomas-sutton.id.au
 [color]
-    ui = auto
+	ui = auto
 	branch = auto
 	diff = auto
 	interactive = auto
@@ -12,7 +12,11 @@
 	excludesfile = ~/.config/git/ignore
 [fetch]
 	prune = true
+[init]
+	defaultBranch = main
+[pull]
+	ff = only
 [push]
 	default = current
 [diff]
-    compactionHeuristic = true
+	compactionHeuristic = true
