@@ -1,2 +1,5 @@
 #!/bin/sh
-feh  --bg-fill '/home/thsutton/Pictures/Backgrounds/3472586639_1169f54f16_o.jpg' 
+
+IMG="$HOME/Pictures/Backgrounds/3472586639_1169f54f16_o.jpg"
+
+[ -r "$IMG" ] && feh --bg-fill "$IMG"

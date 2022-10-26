@@ -7,3 +7,10 @@ IgnoreUnknown UseKeychain
     UseKeychain yes
 
 AddKeysToAgent yes
+
+Host github.com
+	PKCS11Provider /usr/local/lib/libykcs11.dylib
+
+Host gitlab.com
+	PKCS11Provider /usr/local/lib/libykcs11.dylib
+

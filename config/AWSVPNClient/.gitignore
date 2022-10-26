@@ -1,0 +1,6 @@
+ConnectionProfiles
+MetricsAttributes
+OpenVpnConfigs/
+TemporaryCredentials/
+*.db
+logs/

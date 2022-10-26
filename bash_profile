@@ -3,4 +3,15 @@
 #
 
 [[ -r ~/.bashrc ]] && . ~/.bashrc
-[[ -r "$HOME/.nix-profile/etc/profile.d/nix.sh" ]] && . "$HOME/.nix-profile/etc/profile.d/nix.sh" 
+
+for file in $(find "$HOME/.config/bash/lib" -type f -name '*.sh' -perm -100); do
+    . "$file"
+done
+
+for file in $(find "$HOME/.config/bash/env" -type f -name '*.sh' -perm -100); do
+    . "$file"
+done
+
+for file in $(find "$HOME/.config/bash/completion" -type f -name '*.sh' -perm -100); do
+    . "$file"
+done

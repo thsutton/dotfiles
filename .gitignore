@@ -5,24 +5,23 @@
 *.bak
 *.elc
 _darcs/
-# Configuration for Linux
-/config/htop/
-/config/pulse/*-default-source
-/config/pulse/*-default-sink
-/config/pulse/*.tdb
-/config/pulse/cookie
-/config/gtk-2.0/gtkfilechooser.ini
-/config/configstore/*-usage.json
-/vim/.netrwhist
-/vim/bundle/
-/emacs.d/elpa/
-/emacs.d/session.*
-/emacs.d/site-lisp/twelf
-/emacs.d/network-security.data
-
 # Do not commit
 dnc-*
+# Sensitive or machine-specific
+/config/configstore/*-usage.json
 /config/configstore/update-notifier-*
-config/yarn/global/node_modules/
-config/SoundTouch*
-config/gcloud
+/config/gcloud
+/config/gtk-2.0/gtkfilechooser.ini
+/config/htop/
+/config/pulse/*-default-sink
+/config/pulse/*-default-source
+/config/pulse/*.tdb
+/config/pulse/cookie
+/config/SoundTouch*
+/config/yarn/global/node_modules/
+/emacs.d/elpa/
+/emacs.d/network-security.data
+/emacs.d/session.*
+/emacs.d/site-lisp/twelf
+/vim/.netrwhist
+/vim/bundle/
