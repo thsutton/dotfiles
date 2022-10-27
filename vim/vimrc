@@ -7,6 +7,7 @@ set expandtab
 set hidden
 set ignorecase
 set incsearch
+set list
 set modeline
 set nocindent
 set nocompatible
@@ -31,9 +32,6 @@ set wildignore+=*.swp,*~,*/tmp/*,*/dist/*,*.so,*.o,*.lo,*.a
 set wildmenu
 set wildmode=longest,list,full
 set wrapmargin=2
-
-
-highlight LineNr ctermfg=949494
 
 filetype plugin indent on
 syntax on
