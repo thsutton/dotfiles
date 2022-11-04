@@ -25,3 +25,4 @@ dnc-*
 /emacs.d/site-lisp/twelf
 /vim/.netrwhist
 /vim/bundle/
+/config/nvim/plugin/packer_compiled.lua
