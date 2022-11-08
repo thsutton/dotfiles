@@ -13,6 +13,8 @@ local packer_bootstrap = ensure_packer()
 
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
+  use 'nvim-tree/nvim-web-devicons'
+  use 'folke/lsp-colors.nvim'
   use 'neovim/nvim-lspconfig'
   use 'nvim-lua/plenary.nvim'
   use {'nvim-telescope/telescope.nvim', tag = '0.1.0'}
@@ -23,6 +25,15 @@ return require('packer').startup(function(use)
     },
   }
   use "folke/trouble.nvim"
+  use {
+        "hrsh7th/nvim-cmp",
+        requires = {
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-nvim-lua",
+        }
+  }
 
 
   -- Automatically set up your configuration after cloning packer.nvim

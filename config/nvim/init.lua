@@ -26,7 +26,10 @@ vim.wo.relativenumber = false
 vim.wo.signcolumn = 'yes'
 vim.wo.wrap = false
 
+
 require("thsutton.plugins")
+
+require("lsp-colors").setup {}
 
 require("lspconfig").sumneko_lua.setup {
     settings = {
@@ -48,6 +51,13 @@ require("lspconfig").sumneko_lua.setup {
 }
 
 require("lspconfig").terraformls.setup {}
+
+local cmp = require("cmp")
+cmp.setup {
+    sources = cmp.config.sources({
+        { name = 'nvim_lsp' },
+    })
+}
 
 
 require("neoclip").setup {
