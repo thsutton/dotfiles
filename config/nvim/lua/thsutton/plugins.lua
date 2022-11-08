@@ -25,6 +25,7 @@ return require('packer').startup(function(use)
     },
   }
   use "folke/trouble.nvim"
+  use { "L3MON4D3/LuaSnip", tag = "v1.*" }
   use {
         "hrsh7th/nvim-cmp",
         requires = {
