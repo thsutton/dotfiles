@@ -1,51 +1,25 @@
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
-end
+return {
+    'nvim-lua/plenary.nvim',
+    { 'nvim-telescope/telescope.nvim', tag = '0.1.0' },
 
-local packer_bootstrap = ensure_packer()
+    'stevearc/dressing.nvim',
+    'nvim-tree/nvim-web-devicons',
+    { 'nvim-tree/nvim-tree.lua', tag = 'nightly' },
+    'folke/lsp-colors.nvim',
+    'neovim/nvim-lspconfig',
+    'AckslD/nvim-neoclip.lua',
+    'folke/trouble.nvim',
+    -- { 'L3MON4D3/LuaSnip', tag = 'v1.*' },
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-path',
+    'hrsh7th/cmp-nvim-lua',
+    'hrsh7th/nvim-cmp',
+    'nvim-treesitter/nvim-treesitter',
 
-return require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim'
-    use 'stevearc/dressing.nvim'
-    use 'nvim-tree/nvim-web-devicons'
-    use { 'nvim-tree/nvim-tree.lua', tag = 'nightly' }
-    use 'folke/lsp-colors.nvim'
-    use 'neovim/nvim-lspconfig'
-    use 'nvim-lua/plenary.nvim'
-    use { 'nvim-telescope/telescope.nvim', tag = '0.1.0' }
-    use {
-        'AckslD/nvim-neoclip.lua',
-        requires = {
-            { 'nvim-telescope/telescope.nvim' },
-        },
-    }
-    use 'folke/trouble.nvim'
-    use { 'L3MON4D3/LuaSnip', tag = 'v1.*' }
-    use {
-        'hrsh7th/nvim-cmp',
-        requires = {
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-path',
-            'hrsh7th/cmp-nvim-lua',
-        }
-    }
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate',
-    }
-
+    'kevinhwang91/promise-async',
+    'kevinhwang91/nvim-ufo',
 
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
-    if packer_bootstrap then
-        require('packer').sync()
-    end
-end)
+}

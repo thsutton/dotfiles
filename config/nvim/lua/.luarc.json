@@ -1,0 +1,30 @@
+{
+    "workspace.library": [
+        "/Users/tsutton/.config/nvim",
+        "/Users/tsutton/.local/share/nvim/lazy/lazy.nvim",
+        "/Users/tsutton/.local/share/nvim/lazy/nvim-web-devicons",
+        "/Users/tsutton/.local/share/nvim/lazy/trouble.nvim",
+        "/Users/tsutton/.local/share/nvim/lazy/cmp-path",
+        "/Users/tsutton/.local/share/nvim/lazy/plenary.nvim",
+        "/Users/tsutton/.local/share/nvim/lazy/telescope.nvim",
+        "/Users/tsutton/.local/share/nvim/lazy/nvim-lspconfig",
+        "/Users/tsutton/.local/share/nvim/lazy/nvim-tree.lua",
+        "/Users/tsutton/.local/share/nvim/lazy/nvim-neoclip.lua",
+        "/Users/tsutton/.local/share/nvim/lazy/nvim-cmp",
+        "/Users/tsutton/.local/share/nvim/lazy/lsp-colors.nvim",
+        "/Users/tsutton/.local/share/nvim/lazy/dressing.nvim",
+        "/Users/tsutton/.local/share/nvim/lazy/cmp-nvim-lsp",
+        "/Users/tsutton/.local/share/nvim/lazy/cmp-nvim-lua",
+        "/Users/tsutton/.local/share/nvim/lazy/cmp-buffer",
+        "/Users/tsutton/.local/share/nvim/lazy/nvim-treesitter",
+        "/usr/local/Cellar/neovim/0.8.3/share/nvim/runtime",
+        "/usr/local/Cellar/neovim/0.8.3/share/nvim/runtime/pack/dist/opt/matchit",
+        "/usr/local/Cellar/neovim/0.8.3/lib/nvim",
+        "/Users/tsutton/.local/state/nvim/lazy/readme",
+        "/Users/tsutton/.local/share/nvim/lazy/cmp-path/after",
+        "/Users/tsutton/.local/share/nvim/lazy/cmp-nvim-lsp/after",
+        "/Users/tsutton/.local/share/nvim/lazy/cmp-nvim-lua/after",
+        "/Users/tsutton/.local/share/nvim/lazy/cmp-buffer/after",
+        "${3rd}/luassert/library"
+    ]
+}
