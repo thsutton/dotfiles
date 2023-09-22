@@ -1,0 +1,4 @@
+README
+======
+
+Configuration for neovim
