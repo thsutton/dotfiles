@@ -1,0 +1,13 @@
+commodity AUD
+    format 1,000.00 AUD
+    nomarket
+    default
+
+commodity JPY
+    format 1,000 JPY
+    nomarket
+
+commodity GBP
+    format 1,000.00 GBP
+    nomarket
+

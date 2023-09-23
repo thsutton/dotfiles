@@ -15,7 +15,6 @@ require("lazy").setup {
     require("main.plugins.cmp"),
     require("main.plugins.devicons"),
     require("main.plugins.gitsigns"),
-    require("main.plugins.lsp-zero"),
     require("main.plugins.lualine"),
     require("main.plugins.oil"),
     require("main.plugins.smartcolumn"),
@@ -25,4 +24,6 @@ require("lazy").setup {
     require("main.plugins.treesitter"),
     require("main.plugins.trouble"),
     require("main.plugins.ufo"),
+    require("main.plugins.mason"),
+    require("main.plugins.lsp-zero"),
 }

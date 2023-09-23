@@ -10,7 +10,7 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 
-vim.o.background = "dark"
+vim.o.background = "light"
 vim.o.backspace = "indent,eol,start"
 vim.o.backup = false
 vim.o.colorcolumn = "80,90,100"
@@ -43,7 +43,7 @@ vim.o.syntax = "on"
 vim.o.tabstop = 8
 vim.o.termguicolors = true
 vim.o.textcolumn = "80,90,100"
-vim.o.title = true
+vim.o.title = false
 vim.o.undodir = vim.fn.stdpath("state") .. "/undodir"
 vim.o.undofile = true
 vim.o.wrap = false

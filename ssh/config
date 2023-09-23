@@ -9,8 +9,8 @@ IgnoreUnknown UseKeychain
 AddKeysToAgent yes
 
 Host github.com
-	PKCS11Provider /usr/local/lib/libykcs11.dylib
+	PKCS11Provider /usr/local/lib/libykcs11.so
 
 Host gitlab.com
-	PKCS11Provider /usr/local/lib/libykcs11.dylib
+	PKCS11Provider /usr/local/lib/libykcs11.so
 

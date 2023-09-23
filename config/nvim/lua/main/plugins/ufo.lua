@@ -16,6 +16,7 @@ end
 
 function M.keys()
     return {
+         { "<leader>zC", function() require("ufo").closeFold() end },
          { "<leader>zR", function() require("ufo").openAllFolds() end },
          { "<leader>zM", function() require("ufo").closeAllFolds() end },
     }

@@ -18,5 +18,6 @@
 	ff = only
 [push]
 	default = current
+	autoSetupRemote = true
 [diff]
 	compactionHeuristic = true

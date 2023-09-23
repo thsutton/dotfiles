@@ -1,0 +1,10 @@
+xterm*faceName: DejaVu Sans Mono
+xterm*faceSize: 16
+URxvt.visualBell: True
+URxvt.scrollBar: False
+URxvt.scrollTtyOutput: False
+URxvt.scrollWithBuffer: True
+URxvt.scrollTtyKeypress: True
+URxvt.secondaryScreen: 1
+URxvt.secondaryScroll: 0
+URxvt.font: xft:DejaVu Sans Mono:size=16

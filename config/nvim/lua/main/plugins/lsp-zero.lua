@@ -1,14 +1,13 @@
 local M = {
     "VonHeikemen/lsp-zero.nvim",
+    branch = "v3.x"
 }
 
-M.branch = "v3.x"
 
 M.dependencies = {
     -- LSP Support
     "neovim/nvim-lspconfig",
     "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
     -- Autocompletion
     "hrsh7th/nvim-cmp",
     "hrsh7th/cmp-nvim-lsp",
@@ -27,16 +26,8 @@ function M.config()
 	lsp_zero.default_keymaps({buffer = bufnr})
     end)
 
-    require("mason").setup {}
-    require("mason-lspconfig").setup {
-	ensure_installed = {
-	    "lua_ls",
-	    "bashls",
-	},
-	handlers = {
-	    lsp_zero.default_setup,
-	},
-    }
+    local lspconfig = require("lspconfig")
+    lspconfig.lua_ls.setup {}
 end
 
 return M
