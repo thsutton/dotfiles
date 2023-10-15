@@ -2,4 +2,8 @@
 
 IMG="$HOME/Pictures/Backgrounds/3472586639_1169f54f16_o.jpg"
 
-[ -r "$IMG" ] && feh --bg-fill "$IMG"
+if [ -x "$(which feh)" -a -r "$IMG" ]; then
+    feh --bg-fill "$IMG"
+else
+    echo "Skipping feh, missing image $IMG"
+fi
