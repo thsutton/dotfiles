@@ -1,3 +1,3 @@
 #!/bin/sh
 
-exec /bin/bash --login -i ~/.xinitrc
+exec /bin/sh ~/.xinitrc
