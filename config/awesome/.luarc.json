@@ -1,0 +1,17 @@
+{
+    "runtime.version": "Lua5.3",
+    "runtime.path": [
+	"?.lua",
+	"?/init.lua"
+    ],
+    "diagnostics.globals": [
+        "awesome",
+        "screen",
+        "client",
+        "root"
+    ],
+    "workspace.checkThirdParty": false,
+    "workspace.library": [
+	"."
+    ]
+}
