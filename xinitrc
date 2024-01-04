@@ -32,17 +32,20 @@ load modmap "/etc/X11/xinit/.Xmodmap"
 load modmap "/usr/local/etc/X11/xinit/.Xmodmap"
 load modmap "$HOME/.Xmodmap"
 
-load xrdb -merge /etc/X11/xinit/.XResources
-load xrdb -merge /usr/local/etc/X11/xinit/.XResources
+load xrdb -merge /etc/X11/xinit/.Xresources
+load xrdb -merge /usr/local/etc/X11/xinit/.Xresources
+load xrdb -merge "$HOME/.Xresources"
 load xrdb -merge "$HOME/.Xdefaults"
-load xrdb -merge "$HOME/.XResources"
 
-if [ -x "$(which fcitx5 2>/dev/null)" ]; then
-    export XMODIFIERS="@im=fcitx"
-    export GTK_IM_MODULE="fcitx/xim"
-    export QT_IM_MODULE="fcitx"
-    fcitx5 -d
-fi
+# Disable fcitx5 because it's annoying. Needs a _lot_ of configuration
+# before it can be enabled by default again.
+#
+# if [ -x "$(which fcitx5 2>/dev/null)" ]; then
+#     export XMODIFIERS="@im=fcitx"
+#     export GTK_IM_MODULE="fcitx/xim"
+#     export QT_IM_MODULE="fcitx"
+#     fcitx5 -d
+# fi
 
 run xscreensaver --no-splash
 
